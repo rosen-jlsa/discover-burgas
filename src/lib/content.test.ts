@@ -3,7 +3,7 @@ import { getLandmark, publishedLandmarks, searchLandmarks } from "./content";
 
 describe("content repository", () => {
   it("returns published records and exact slugs", () => {
-    expect(publishedLandmarks()).toHaveLength(7);
+    expect(publishedLandmarks()).toHaveLength(8);
     expect(getLandmark("aquae-calidae")?.id).toBe("lm-aquae");
     expect(getLandmark("not-real")).toBeUndefined();
   });

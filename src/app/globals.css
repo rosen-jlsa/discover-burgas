@@ -346,3 +346,55 @@ body { color:var(--slate); background:#020405; font-family:Inter,Manrope,"Segoe 
 @media print {
   html,body { background:#fff; color:#111; }.print-sign { color:#10191c; background:#fff; }
 }
+
+/* Burgas 2027 host-city season — original event-inspired layer, not official branding. */
+:root {
+  --turquoise:#54f3dc;
+  --event-blue:#6257ff;
+  --event-pink:#ff4fd8;
+  --event-lime:#dfff65;
+  --event-ink:#05030d;
+}
+body {
+  background:
+    radial-gradient(circle at 12% 9%,rgba(98,87,255,.1),transparent 26rem),
+    radial-gradient(circle at 88% 22%,rgba(255,79,216,.08),transparent 28rem),
+    #020405;
+}
+.site-header::after { content:""; position:absolute; inset:auto 0 -1px; height:1px; background:linear-gradient(90deg,transparent,var(--event-blue),var(--event-pink),var(--turquoise),transparent); opacity:.55; }
+.brand-mark { background:conic-gradient(from 215deg,rgba(84,243,220,.18),rgba(98,87,255,.3),rgba(255,79,216,.22),rgba(84,243,220,.18)); }
+.button { background:linear-gradient(105deg,var(--event-lime),var(--turquoise)); box-shadow:0 0 34px rgba(84,243,220,.11); }
+.button:hover { box-shadow:0 0 42px rgba(84,243,220,.28); }
+.hero { background:linear-gradient(180deg,rgba(5,3,13,.2),#020405); }
+.hero-aura { background:radial-gradient(ellipse at center,rgba(84,243,220,.43),rgba(98,87,255,.3) 34%,rgba(255,79,216,.12) 53%,transparent 72%); }
+.hero-rhythm { position:absolute; z-index:-1; top:170px; left:50%; width:min(1180px,96vw); height:300px; transform:translateX(-50%); display:flex; align-items:center; justify-content:center; gap:clamp(6px,1.1vw,16px); opacity:.28; mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent); }
+.hero-rhythm i { width:4px; height:calc(24px + (var(--n, 1) * 0px)); border-radius:999px; background:linear-gradient(var(--event-pink),var(--event-blue),var(--turquoise)); animation:pulseLine 2.8s ease-in-out infinite; }
+.hero-rhythm i:nth-child(3n+1) { height:82px; animation-delay:-.9s; }.hero-rhythm i:nth-child(3n+2) { height:160px; animation-delay:-1.7s; }.hero-rhythm i:nth-child(3n) { height:236px; animation-delay:-2.2s; }
+.hero-bg { box-shadow:0 0 0 8px rgba(255,255,255,.025),0 0 90px rgba(98,87,255,.25),0 45px 100px rgba(0,0,0,.75); }
+.hero-note { border-color:rgba(84,243,220,.25); }
+.event-section { padding:0 0 130px; background:#020405; }
+.event-card { position:relative; overflow:hidden; padding:30px; border:1px solid rgba(255,255,255,.14); border-radius:34px; background:radial-gradient(circle at 85% 10%,rgba(255,79,216,.2),transparent 28%),radial-gradient(circle at 55% 100%,rgba(84,243,220,.16),transparent 34%),linear-gradient(135deg,#0d0a25,#07151b 58%,#0d0819); box-shadow:0 50px 140px rgba(0,0,0,.48); }
+.event-card::before { content:""; position:absolute; inset:-40%; background:repeating-radial-gradient(circle at 75% 40%,transparent 0 30px,rgba(255,255,255,.04) 31px 32px); transform:rotate(-8deg); pointer-events:none; }
+.event-card > * { position:relative; z-index:1; }
+.event-signal { display:flex; align-items:center; gap:10px; padding-bottom:22px; border-bottom:1px solid rgba(255,255,255,.12); color:var(--turquoise); font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.event-main { display:grid; grid-template-columns:1fr 310px; gap:70px; align-items:end; padding:65px 30px 50px; }
+.event-main h2 { max-width:760px; margin:12px 0 22px; font-size:clamp(3.3rem,6.3vw,6.7rem); }
+.event-main p { max-width:690px; color:rgba(255,255,255,.65); line-height:1.7; }
+.event-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+.event-dates { min-height:310px; display:flex; flex-direction:column; justify-content:flex-end; padding:28px; border:1px solid rgba(255,255,255,.15); border-radius:28px; background:rgba(3,4,11,.48); backdrop-filter:blur(18px); }
+.event-dates svg { color:var(--event-lime); }.event-dates strong { margin-top:auto; font-size:clamp(3.2rem,5vw,5.6rem); line-height:.88; letter-spacing:-.08em; }.event-dates span { margin-top:13px; color:rgba(255,255,255,.58); font-size:.69rem; font-weight:800; letter-spacing:.17em; }
+.event-card > small { display:block; padding:18px 30px 0; border-top:1px solid rgba(255,255,255,.1); color:rgba(255,255,255,.42); }
+.navigation-chooser { margin-top:24px; }.navigation-chooser > p { margin:0 0 12px; color:#fff; font-size:.76rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.navigation-providers { display:flex; flex-wrap:wrap; gap:9px; }
+.navigation-providers a { min-height:46px; display:inline-flex; align-items:center; gap:8px; padding:0 15px; border:1px solid rgba(255,255,255,.2); border-radius:13px; color:#fff; background:rgba(255,255,255,.06); font-size:.78rem; font-weight:800; transition:.2s ease; }
+.navigation-providers a:first-child { color:#00140f; border-color:var(--turquoise); background:var(--turquoise); }
+.navigation-providers a:hover { border-color:var(--event-pink); transform:translateY(-2px); }
+.navigation-chooser > small { display:block; margin-top:11px; color:rgba(255,255,255,.48); line-height:1.45; }
+.navigation-chooser.compact { margin-top:14px; }.navigation-chooser.compact .navigation-providers a { min-height:40px; padding:0 12px; }.navigation-chooser.compact .navigation-providers span { font-size:.72rem; }
+.place-actions { align-items:center; flex-wrap:wrap; }.place-actions .navigation-chooser { margin-top:0; }
+.route-stop .navigation-providers { margin-top:2px; }.route-stop .navigation-providers a { color:rgba(255,255,255,.78); background:#10181c; border-color:var(--line); }
+.route-stop .navigation-providers a:first-child { color:#00140f; background:var(--turquoise); }
+.location-copy .navigation-chooser { margin-top:12px; }
+@keyframes pulseLine { 0%,100% { transform:scaleY(.36); opacity:.38; } 50% { transform:scaleY(1); opacity:1; } }
+@media (max-width:900px) { .event-main { grid-template-columns:1fr; gap:34px; }.event-dates { min-height:230px; }.event-section { padding-bottom:90px; } }
+@media (max-width:620px) { .hero-rhythm { top:125px; height:230px; }.event-card { padding:18px; border-radius:25px; }.event-main { padding:45px 8px 34px; }.event-main h2 { font-size:3.25rem; }.event-card > small { padding:17px 8px 0; }.event-dates { min-height:210px; padding:22px; }.navigation-providers { display:grid; grid-template-columns:1fr; width:100%; }.navigation-providers a { justify-content:center; }.place-actions { display:grid; }.place-actions .favorite { justify-content:center; }.route-stop .navigation-providers { grid-template-columns:1fr; } }

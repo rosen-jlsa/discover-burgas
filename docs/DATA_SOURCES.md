@@ -13,6 +13,7 @@ Last research verification: **22 October 2026**. Visitor information is intentio
 | The Burgas Clock | [Go to Burgas walking-tour meeting-point reference](https://info.gotoburgas.com/bg/news/free-tours-of-burgas-for-the-eighth-consecutive-year-from-bu) |
 | Aquae Calidae | [Official Go to Burgas landmark directory](https://info.gotoburgas.com/bg/explore/landmark), [Wikimedia category/coordinate record](https://commons.wikimedia.org/wiki/Category:Aquae_Calidae) |
 | St. Anastasia Island | [Official Go to Burgas entry](https://info.gotoburgas.com/bg/explore/landmark/st-anastasia-island) |
+| Arena Burgas — Eurovision 2027 | [Official Eurovision Host City FAQ](https://www.eurovision.com/newsroom/frequently-asked-questions/faqs-burgas-2027/), [BNT Burgas 2027 information](https://eurovision2027.bg/), [coordinate record](https://musicbrainz.org/place/cd28e70d-8dcc-40b6-81b9-7b7efb60b35b) |
 
 Coordinates were cross-checked against official location context and OpenStreetMap/Wikimedia records before inclusion. Each source URL and verification date is also stored with its landmark in the seed manifest.
 
@@ -27,6 +28,8 @@ Coordinates were cross-checked against official location context and OpenStreetM
 | St. Anastasia Island | EvelinaRibarova | CC BY-SA 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:St._Anastasia_Island_(о-в_Света_Анастасия)_-_Burgas,_Bulgaria_-7-2017_(247).jpg) |
 
 The Historical Museum and Burgas Clock use branded non-documentary fallbacks because a suitable reusable image was not included. Generated imagery is not presented as documentary evidence. Attribution remains visible beside every documentary image.
+
+Arena Burgas also uses the branded non-documentary fallback. No official Eurovision logo or event photography is redistributed. As of 22 October 2026, Arena Burgas is the confirmed contest venue; official Eurovision Village and EuroClub locations have not been announced and are therefore not included.
 
 ## Publication procedure
 

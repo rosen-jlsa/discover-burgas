@@ -18,13 +18,13 @@ export function Header({ locale }: { locale: Locale }) {
       </Link>
       <nav className="desktop-nav" aria-label={locale === "bg" ? "Основна навигация" : "Primary navigation"}>
         <Link href={`/${locale}`}>{t.navHome}</Link><Link href={`/${locale}/map`}>{t.navMap}</Link>
-        <Link href={`/${locale}/routes/burgas-centre-stories`}>{t.navRoute}</Link><Link href={`/${locale}/demo`}>{t.navDemo}</Link>
+        <Link href={`/${locale}/routes/burgas-centre-stories`}>{t.navRoute}</Link><Link href={`/${locale}/places/arena-burgas`}>Burgas 2027</Link><Link href={`/${locale}/demo`}>{t.navDemo}</Link>
       </nav>
       <div className="header-actions">
         <Link className="language" href={otherPath}><Languages size={17}/>{other.toUpperCase()}</Link>
         <details className="mobile-menu"><summary aria-label={locale === "bg" ? "Отвори меню" : "Open menu"}><Menu/></summary><nav>
           <Link href={`/${locale}`}>{t.navHome}</Link><Link href={`/${locale}/map`}>{t.navMap}</Link>
-          <Link href={`/${locale}/routes/burgas-centre-stories`}>{t.navRoute}</Link><Link href={`/${locale}/demo`}>{t.navDemo}</Link>
+          <Link href={`/${locale}/routes/burgas-centre-stories`}>{t.navRoute}</Link><Link href={`/${locale}/places/arena-burgas`}>Burgas 2027</Link><Link href={`/${locale}/demo`}>{t.navDemo}</Link>
         </nav></details>
       </div>
     </div>

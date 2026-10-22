@@ -8,13 +8,13 @@ Open `/bg/demo` on the presentation computer. Keep the Aquae Calidae sign open o
 
 **0:00–0:35 — The problem.** On the homepage, explain that people pass meaningful places without an immediate, trustworthy story or a practical next stop.
 
-**0:35–1:10 — Discovery.** Open the map. Search for “Акве”, switch between map and list, and point out the seven sourced records and transport distinctions.
+**0:35–1:10 — Discovery.** Open the map. Search for “Арена” or “Акве”, switch between map and list, and point out the eight sourced records and transport distinctions.
 
 **1:10–2:10 — The QR innovation.** Show the printable sign proposal. Scan its real QR with the phone. Emphasize that `/places/aquae-calidae` is a stable route and that no install or login is required.
 
 **2:10–3:00 — Story to action.** On the mobile landmark page, show the verified story, image attribution, source disclosure, location, “Упътване”, save button, and nearby places.
 
-**3:00–3:40 — Continue exploring.** Open a nearby destination or return to the central route. Show its ordered five stops and explain that external maps handle turn-by-turn directions.
+**3:00–3:40 — Continue exploring.** Open a nearby destination or return to the central route. Show Google Maps, Apple Maps, and Waze choices, then explain that the selected external app handles current turn-by-turn directions.
 
 **3:40–4:15 — Public value and credibility.** Mention Bulgarian-first access, English localization, list fallback, opt-in location, nullable unverified visitor data, licensed images, and the explicit non-municipal disclaimer.
 

@@ -3,8 +3,8 @@ import { landmarks, routes } from "./landmarks";
 import { landmarkSchema, routeSchema } from "@/types/content";
 
 describe("verified content manifests", () => {
-  it("contains seven valid published landmarks with both locales", () => {
-    expect(landmarks).toHaveLength(7);
+  it("contains eight valid published landmarks with both locales", () => {
+    expect(landmarks).toHaveLength(8);
     for (const item of landmarks) {
       expect(() => landmarkSchema.parse(item)).not.toThrow();
       expect(item.status).toBe("PUBLISHED");

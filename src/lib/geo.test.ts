@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { haversineKm, nearby } from "./geo";
+import { haversineKm, navigationUrls, nearby } from "./geo";
 import { landmarks } from "@/data/landmarks";
 
 describe("geospatial helpers", () => {
@@ -15,5 +15,13 @@ describe("geospatial helpers", () => {
     expect(results).toHaveLength(3);
     expect(results[0].distanceKm).toBeLessThanOrEqual(results[1].distanceKm);
     expect(results.every((x) => x.item.slug !== origin.slug)).toBe(true);
+  });
+  it("builds keyless universal navigation links", () => {
+    const arena = landmarks.find((x) => x.slug === "arena-burgas")!;
+    const urls = navigationUrls(arena);
+    expect(urls.google).toContain("google.com/maps/dir/?api=1");
+    expect(urls.apple).toContain("maps.apple.com/directions");
+    expect(urls.waze).toContain("waze.com/ul?");
+    expect(Object.values(urls).every((url) => url.includes("42.524694"))).toBe(true);
   });
 });

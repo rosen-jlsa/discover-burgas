@@ -3,11 +3,19 @@ import AxeBuilder from "@axe-core/playwright";
 
 test("Bulgarian discovery journey", async ({ page }) => {
   await page.goto("/bg");
-  await expect(page.getByRole("heading", { name: /Градът се променя/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Един град/ })).toBeVisible();
   await page.getByRole("link", { name: "Разгледай картата" }).first().click();
   await expect(page).toHaveURL(/\/bg\/map/);
   await page.getByPlaceholder("Търси място или история…").fill("Акве");
   await expect(page.getByText("Туристически комплекс „Акве Калиде“").first()).toBeVisible();
+});
+
+test("Arena Burgas offers universal navigation choices", async ({ page }) => {
+  await page.goto("/bg/places/arena-burgas");
+  await expect(page.getByRole("heading", { level: 1, name: /Арена Бургас/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Google Maps/ }).first()).toHaveAttribute("href", /google\.com\/maps\/dir/);
+  await expect(page.getByRole("link", { name: /Apple Maps/ }).first()).toHaveAttribute("href", /maps\.apple\.com\/directions/);
+  await expect(page.getByRole("link", { name: /Waze/ }).first()).toHaveAttribute("href", /waze\.com\/ul/);
 });
 
 test("stable QR route redirects and English switch works", async ({ page }) => {

@@ -3,7 +3,7 @@
 ## Completed MVP
 
 - Original bilingual identity and responsive editorial UI
-- Seven sourced landmark records and five-stop central route
+- Eight sourced location records, including confirmed Eurovision 2027 venue Arena Burgas, and a five-stop central route
 - Stable QR redirect, downloadable SVG/PNG codes, and printable proposal
 - Localized stories, source disclosure, licensed-image attribution, maps, nearby discovery, directions, and local favorites
 - Search, categories, map/list parity, manual geolocation, PWA shell, and offline explanation

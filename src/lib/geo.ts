@@ -18,5 +18,19 @@ export function nearby(origin: Landmark, all: Landmark[], limit = 3) {
 
 export function directionsUrl(item: Landmark) {
   if (item.latitude == null || item.longitude == null) return item.officialUrl ?? "#";
-  return `https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}`;
+  return navigationUrls(item).google;
+}
+
+export function navigationUrls(item: Landmark) {
+  if (item.latitude == null || item.longitude == null) {
+    const fallback = item.officialUrl ?? "#";
+    return { google: fallback, apple: fallback, waze: fallback };
+  }
+  const coordinates = `${item.latitude},${item.longitude}`;
+  const encoded = encodeURIComponent(coordinates);
+  return {
+    google: `https://www.google.com/maps/dir/?api=1&destination=${encoded}&dir_action=navigate`,
+    apple: `https://maps.apple.com/directions?destination=${encoded}`,
+    waze: `https://waze.com/ul?ll=${encoded}&navigate=yes&utm_source=discover-burgas`,
+  };
 }

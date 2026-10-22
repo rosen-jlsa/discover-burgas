@@ -6,17 +6,17 @@ Executed on Windows on **22 October 2026**. Only observed results are recorded.
 |---|---|---|
 | Production build | PASS | `npm run build`; 25 static/SSG pages generated, API/dynamic routes compiled |
 | Type checking | PASS | `npm run typecheck` |
-| Unit tests | PASS | `npm test`; 8 tests covering manifests, localization/search, publication lookup, route integrity, Haversine ordering, QR URL construction, and QR decoding |
-| Browser journeys | PASS | `npm run test:e2e`; 12/12 across desktop Chromium and Pixel 7 emulation |
+| Unit tests | PASS | `npm test`; 9 tests covering manifests, localization/search, publication lookup, route integrity, Haversine ordering, universal map links, QR URL construction, and QR decoding |
+| Browser journeys | PASS | `npm run test:e2e`; 14/14 across desktop Chromium and Pixel 7 emulation |
 | Automated accessibility | PASS | axe-core reported no serious or critical homepage violations in both browser projects |
-| Rendered screenshot suite | PASS | `npm run screenshots`; 8/8 captures after Leaflet markers rendered |
+| Rendered screenshot suite | PASS | `npm run screenshots`; 9/9 captures after Leaflet markers rendered |
 | Prisma client generation | PASS | `npm run db:generate` |
 | Production dependency audit | PASS | `npm audit --omit=dev`; zero production vulnerabilities reported |
 | Lint | PASS with warnings | `npm run lint`; three Next.js `no-img-element` warnings are limited to server-generated QR endpoints |
 
-Browser coverage includes Bulgarian discovery/search, stable language-neutral QR redirect, language switching, local favorite persistence, denied-geolocation fallback, API locale validation, missing slugs, QR SVG response, and accessibility scanning.
+Browser coverage includes Bulgarian discovery/search, Arena Burgas routing through Google Maps/Apple Maps/Waze, stable language-neutral QR redirect, language switching, local favorite persistence, denied-geolocation fallback, API locale validation, missing slugs, QR SVG response, and accessibility scanning.
 
-Screenshots cover desktop/mobile homepage, discovery map, landmark detail, mobile nearby discovery, cultural route, QR demonstration, and printable sign.
+Screenshots cover desktop/mobile homepage, discovery map, landmark detail, Arena Burgas, mobile nearby discovery, cultural route, QR demonstration, and printable sign.
 
 ## Not executed
 

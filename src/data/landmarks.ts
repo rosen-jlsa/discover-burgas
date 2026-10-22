@@ -86,6 +86,22 @@ const raw: Landmark[] = [
     },
     images: [{ path: "/images/island.jpg", creator: "EvelinaRibarova", sourceUrl: "https://commons.wikimedia.org/wiki/File:St._Anastasia_Island_(о-в_Света_Анастасия)_-_Burgas,_Bulgaria_-7-2017_(247).jpg", license: "CC BY-SA 4.0", attribution: "EvelinaRibarova / Wikimedia Commons / CC BY-SA 4.0" }],
     sources: [tourism("Остров Света Анастасия", "https://info.gotoburgas.com/bg/explore/landmark/st-anastasia-island"), { title: "St. Anastasia Island media record", url: "https://commons.wikimedia.org/wiki/File:St._Anastasia_Island_(о-в_Света_Анастасия)_-_Burgas,_Bulgaria_-7-2017_(247).jpg", publisher: "Wikimedia Commons", verifiedAt }]
+  },
+  {
+    id: "lm-arena-burgas", slug: "arena-burgas", category: "event-venue", municipality: "Бургас", area: "Изгрев",
+    address: "бул. „Стефан Стамболов“ 79", latitude: 42.524694, longitude: 27.455806,
+    officialUrl: "https://eurovision2027.bg/", accessibility: null, openingHours: null, entryFees: null,
+    lastVerifiedAt: verifiedAt, status: "PUBLISHED", featured: false,
+    translations: {
+      bg: { name: "Арена Бургас — Евровизия 2027", short: "Официалната сцена на 71-вото издание на Eurovision Song Contest през май 2027 г.", description: "Арена Бургас е потвърденото място за трите телевизионни шоу вечери на Eurovision Song Contest 2027.", history: "Европейският съюз за радио и телевизия и Българската национална телевизия обявяват Бургас за град домакин на 13 август 2026 г. Първият полуфинал е на 11 май 2027 г., вторият — на 13 май, а големият финал — на 15 май. Другите официални фестивални локации все още не са обявени.", facts: ["Арена Бургас е потвърденото място за полуфиналите и финала.", "Шоу вечерите са на 11, 13 и 15 май 2027 г.", "Информацията за билети, транспорт, Eurovision Village и EuroClub се публикува единствено чрез официалните канали."], keywords: ["Евровизия", "Eurovision 2027", "Арена Бургас", "музика", "събитие"] },
+      en: { name: "Arena Burgas — Eurovision 2027", short: "The confirmed stage for the 71st Eurovision Song Contest in May 2027.", description: "Arena Burgas is the confirmed venue for the three televised Eurovision Song Contest 2027 shows.", history: "The European Broadcasting Union and Bulgarian National Television announced Burgas as Host City on 13 August 2026. The First Semi-Final is scheduled for 11 May 2027, the Second Semi-Final for 13 May, and the Grand Final for 15 May. Other official festival locations have not yet been announced.", facts: ["Arena Burgas is the confirmed venue for both Semi-Finals and the Grand Final.", "The live shows are scheduled for 11, 13 and 15 May 2027.", "Ticket, transport, Eurovision Village and EuroClub information should be checked through official channels."], keywords: ["Eurovision", "Eurovision 2027", "Arena Burgas", "music", "event"] }
+    },
+    images: [],
+    sources: [
+      { title: "Burgas 2027 Host City FAQ", url: "https://www.eurovision.com/newsroom/frequently-asked-questions/faqs-burgas-2027/", publisher: "Eurovision Song Contest / EBU", verifiedAt },
+      { title: "Евровизия 2027 в Бургас", url: "https://eurovision2027.bg/", publisher: "Българска национална телевизия", verifiedAt },
+      { title: "Arena Burgas coordinate record", url: "https://musicbrainz.org/place/cd28e70d-8dcc-40b6-81b9-7b7efb60b35b", publisher: "MusicBrainz", verifiedAt }
+    ]
   }
 ];
 
@@ -111,5 +127,6 @@ export const categories = [
   { id: "architecture", bg: "Архитектура", en: "Architecture" },
   { id: "archaeology", bg: "Археология", en: "Archaeology" },
   { id: "urban-heritage", bg: "Градско наследство", en: "Urban heritage" },
-  { id: "historic-sites", bg: "Исторически места", en: "Historic sites" }
+  { id: "historic-sites", bg: "Исторически места", en: "Historic sites" },
+  { id: "event-venue", bg: "Евровизия 2027", en: "Eurovision 2027" }
 ];

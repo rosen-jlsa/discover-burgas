@@ -1,3 +1,5 @@
+![Discover Burgas — independent host-city cultural companion](docs/assets/discover-burgas-banner.svg)
+
 # Открий Бургас / Discover Burgas
 
 > „Всяко място разказва история.“
@@ -6,14 +8,24 @@ Bulgarian-first, mobile-first cultural discovery platform built for a competitio
 
 This repository is an independent competition prototype. It does not claim endorsement by Burgas Municipality or any cultural institution, and the printable signs are proposals—not installed infrastructure.
 
+## Preview
+
+| Desktop discovery | Mobile QR journey |
+|---|---|
+| ![Desktop homepage](screenshots/homepage-desktop.png) | <img src="screenshots/homepage-mobile.png" alt="Mobile homepage" width="280" /> |
+| ![Interactive landmark map](screenshots/interactive-map.png) | <img src="screenshots/nearby-mobile.png" alt="Mobile nearby places" width="280" /> |
+
+![Arena Burgas — Eurovision 2027 visitor page](screenshots/arena-burgas.png)
+
 ## Working MVP
 
-- Seven sourced landmarks in Burgas and the surrounding region
+- Eight sourced locations, including confirmed Eurovision 2027 venue Arena Burgas
 - Bulgarian and English public routes
 - Stable QR targets at `/places/[slug]`
 - SVG and PNG QR downloads generated from `NEXT_PUBLIC_APP_BASE_URL`
 - Leaflet/OpenStreetMap discovery with search, categories, map/list views, opt-in location, and a text fallback
 - Haversine-based nearby recommendations
+- One-tap routing through Google Maps, Apple Maps, or Waze using keyless universal links
 - Five-stop central walking route; Aquae Calidae is transport-dependent and St. Anastasia is boat-dependent
 - Local-only favorites, no account or tracking
 - Printable sign proposal and jury demo mode
@@ -80,6 +92,18 @@ Playwright browsers may first require `npx playwright install chromium`. See [th
 6. Complete a real smartphone-camera scan before public presentation.
 
 Production deployment and real-phone scanning remain pending because no Vercel/Neon credentials or production domain were available in this environment.
+
+### Maps configuration
+
+Visitor navigation does **not** require a Google Maps API key. The application uses official Google Maps URLs, Apple Maps unified URLs, and Waze Deep Links, while the in-page discovery map remains Leaflet/OpenStreetMap.
+
+`NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is reserved as an optional deployment variable if a future release replaces Leaflet with Google Maps Embed or JavaScript API. Never commit the real key; restrict it to the production domain and only the enabled Maps APIs.
+
+## Burgas 2027 information
+
+Burgas is the confirmed Host City for Eurovision 2027, with the live shows scheduled at Arena Burgas on 11, 13, and 15 May 2027. The project links to official EBU/BNT information and does not invent unannounced Eurovision Village, EuroClub, ticket, or transport details.
+
+This repository is an independent cultural-technology prototype and is not affiliated with or endorsed by Eurovision, the EBU, BNT, or Burgas Municipality. Its event-inspired graphics are original and do not reuse the official event logo.
 
 ## Documentation
 
