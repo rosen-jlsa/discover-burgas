@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 test("Bulgarian discovery journey", async ({ page }) => {
   await page.goto("/bg");
-  await expect(page.getByRole("heading", { name: /Открий историите/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Градът се променя/ })).toBeVisible();
   await page.getByRole("link", { name: "Разгледай картата" }).first().click();
   await expect(page).toHaveURL(/\/bg\/map/);
   await page.getByPlaceholder("Търси място или история…").fill("Акве");

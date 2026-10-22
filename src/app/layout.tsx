@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: "#123B52", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="bg"><body><ServiceWorker/>{children}</body></html>;
+  return <html lang="bg" data-scroll-behavior="smooth"><body><ServiceWorker/>{children}</body></html>;
 }

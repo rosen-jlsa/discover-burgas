@@ -17,6 +17,13 @@ for (const [name, path, viewport] of shots) test(`capture ${name}`, async ({ pag
   if (["homepage-desktop", "homepage-mobile", "interactive-map", "landmark-detail", "nearby-mobile", "cultural-route"].includes(name)) {
     await page.locator(".leaflet-marker-icon").first().waitFor({ state: "visible" });
   }
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.documentElement.scrollHeight; y += window.innerHeight) {
+      window.scrollTo(0, y);
+      await new Promise((resolve) => window.setTimeout(resolve, 80));
+    }
+    window.scrollTo(0, 0);
+  });
   await page.waitForFunction(() => Array.from(document.images).every((image) => image.complete && image.naturalWidth > 0));
   await page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
 });
