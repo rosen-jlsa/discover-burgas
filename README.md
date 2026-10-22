@@ -19,6 +19,8 @@ This repository is an independent competition prototype. It does not claim endor
 
 ![The source-backed story of Burgas](screenshots/city-story.png)
 
+![Interactive four-step mobile guide](screenshots/phone-guide.png)
+
 ## Working MVP
 
 - Eight sourced locations, including confirmed Eurovision 2027 venue Arena Burgas
@@ -37,6 +39,7 @@ This repository is an independent competition prototype. It does not claim endor
 - Bright spring 2027 daylight design, animated editorial headlines, and reduced-motion support
 - Source-backed city and platform story at `/bg/story` and `/en/story`
 - Visitor issue reporting and a token-protected configuration health dashboard at `/admin`
+- Interactive phone walkthrough with four working states and an animated European visitor flag stream
 
 ## Stack
 

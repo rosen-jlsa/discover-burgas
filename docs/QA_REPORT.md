@@ -7,15 +7,15 @@ Executed on Windows on **22 October 2026**. Only observed results are recorded.
 | Production build | PASS | `npm run build`; 34 static/SSG pages generated, including bilingual history/report routes, plus API/dynamic routes |
 | Type checking | PASS | `npm run typecheck` |
 | Unit tests | PASS | `npm test`; 9 tests covering manifests, localization/search, publication lookup, route integrity, Haversine ordering, universal map links, QR URL construction, and QR decoding |
-| Browser journeys | PASS | `npm run test:e2e`; 20/20 across desktop Chromium and Pixel 7 emulation |
+| Browser journeys | PASS | `npm run test:e2e`; 22/22 across desktop Chromium and Pixel 7 emulation |
 | Automated accessibility | PASS | axe-core reported no serious or critical homepage violations in both browser projects |
 | Protected admin session | PASS | Local production server accepted the configured token, set the HttpOnly cookie, rendered `/admin`, and authorized `GET /api/reports` |
-| Rendered screenshot suite | PASS | `npm run screenshots`; 12/12 captures after Leaflet markers rendered |
+| Rendered screenshot suite | PASS | `npm run screenshots`; 13/13 captures after Leaflet markers rendered |
 | Prisma client generation | PASS | `npm run db:generate` |
 | Production dependency audit | PASS | `npm audit --omit=dev`; zero production vulnerabilities reported |
 | Lint | PASS with warnings | `npm run lint`; three Next.js `no-img-element` warnings are limited to server-generated QR endpoints |
 
-Browser coverage includes Bulgarian discovery/search, Arena Burgas routing through Google Maps/Apple Maps/Waze, stable language-neutral QR redirect, language switching, local favorite persistence, denied-geolocation fallback, API locale validation, missing slugs, QR SVG response, the source-backed history, issue reporting, the locked admin gate, and accessibility scanning.
+Browser coverage includes Bulgarian discovery/search, Arena Burgas routing through Google Maps/Apple Maps/Waze, stable language-neutral QR redirect, language switching, local favorite persistence, denied-geolocation fallback, API locale validation, missing slugs, QR SVG response, the four-state interactive phone guide, the source-backed history, issue reporting, the locked admin gate, and accessibility scanning.
 
 Screenshots cover desktop/mobile homepage, discovery map, landmark detail, Arena Burgas, mobile nearby discovery, cultural route, QR demonstration, printable sign, city history, mobile issue reporting, and the protected admin gate.
 

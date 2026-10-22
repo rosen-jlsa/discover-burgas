@@ -39,3 +39,18 @@ for (const [name, path, viewport] of shots) test(`capture ${name}`, async ({ pag
   if (brokenImages.length) throw new Error(`Broken screenshot images: ${brokenImages.join(", ")}`);
   await page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
 });
+
+test("capture interactive phone guide", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1200 });
+  await page.goto("/bg");
+  const mapStep = page.getByRole("tab", { name: /Виж какво е наблизо/ });
+  await mapStep.evaluate((element: HTMLElement) => element.click());
+  await page.waitForFunction(() => document.querySelector('[role="tab"][aria-selected="true"]')?.textContent?.includes("Виж какво е наблизо"));
+  await page.evaluate(() => {
+    const section = document.querySelector<HTMLElement>(".phone-guide-section");
+    document.documentElement.style.scrollBehavior = "auto";
+    section?.scrollIntoView({ block: "start" });
+  });
+  await page.waitForTimeout(450);
+  await page.screenshot({ path: "screenshots/phone-guide.png" });
+});

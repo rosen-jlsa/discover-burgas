@@ -78,3 +78,11 @@ test("admin health dashboard stays locked without its token", async ({ page }) =
   await expect(page.getByRole("heading", { name: "System health" })).toBeVisible();
   await expect(page.getByLabel("Access token")).toBeVisible();
 });
+
+test("interactive phone guide explains the four-step journey", async ({ page }) => {
+  await page.goto("/bg");
+  await page.getByRole("tab", { name: /Виж какво е наблизо/ }).click();
+  await expect(page.getByRole("heading", { name: "Наблизо до теб" })).toBeVisible();
+  await page.getByRole("tab", { name: /любимата карта/ }).click();
+  await expect(page.getByRole("button", { name: /Google Maps/ })).toBeVisible();
+});
