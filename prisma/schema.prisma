@@ -1,0 +1,107 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  importFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PublicationStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum TransportMode {
+  WALKING
+  DRIVING
+  BOAT
+  MIXED
+}
+
+model Landmark {
+  id               String              @id
+  slug             String              @unique
+  category         String
+  municipality     String
+  area             String
+  address          String?
+  latitude         Float?
+  longitude        Float?
+  officialUrl      String?
+  accessibility    String?
+  openingHours     String?
+  entryFees        String?
+  lastVerifiedAt   DateTime
+  status           PublicationStatus   @default(DRAFT)
+  translations     LandmarkTranslation[]
+  images           ImageAsset[]
+  sources          SourceReference[]
+  routeStops       RouteStop[]
+}
+
+model LandmarkTranslation {
+  id           String   @id @default(cuid())
+  locale       String
+  name         String
+  short        String
+  description  String
+  history      String
+  facts        Json
+  keywords     Json
+  landmarkId   String
+  landmark     Landmark @relation(fields: [landmarkId], references: [id], onDelete: Cascade)
+  @@unique([landmarkId, locale])
+}
+
+model ImageAsset {
+  id          String   @id @default(cuid())
+  path        String
+  creator     String
+  sourceUrl   String
+  license     String
+  attribution String
+  landmarkId  String
+  landmark    Landmark @relation(fields: [landmarkId], references: [id], onDelete: Cascade)
+}
+
+model SourceReference {
+  id          String   @id @default(cuid())
+  title       String
+  url         String
+  publisher   String
+  verifiedAt  DateTime
+  landmarkId  String
+  landmark    Landmark @relation(fields: [landmarkId], references: [id], onDelete: Cascade)
+}
+
+model CulturalRoute {
+  id           String       @id
+  slug         String       @unique
+  transportMode TransportMode
+  translations RouteTranslation[]
+  stops        RouteStop[]
+}
+
+model RouteTranslation {
+  id          String         @id @default(cuid())
+  locale      String
+  title       String
+  description String
+  routeId     String
+  route       CulturalRoute  @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  @@unique([routeId, locale])
+}
+
+model RouteStop {
+  id          String        @id @default(cuid())
+  position    Int
+  note        String?
+  routeId     String
+  landmarkId  String
+  route       CulturalRoute @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  landmark    Landmark      @relation(fields: [landmarkId], references: [id], onDelete: Cascade)
+  @@unique([routeId, position])
+}

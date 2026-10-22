@@ -1,0 +1,10 @@
+CREATE TYPE "PublicationStatus" AS ENUM ('DRAFT', 'PUBLISHED', 'ARCHIVED');
+CREATE TYPE "TransportMode" AS ENUM ('WALKING', 'DRIVING', 'BOAT', 'MIXED');
+
+CREATE TABLE "Landmark" ("id" TEXT PRIMARY KEY, "slug" TEXT UNIQUE NOT NULL, "category" TEXT NOT NULL, "municipality" TEXT NOT NULL, "area" TEXT NOT NULL, "address" TEXT, "latitude" DOUBLE PRECISION, "longitude" DOUBLE PRECISION, "officialUrl" TEXT, "accessibility" TEXT, "openingHours" TEXT, "entryFees" TEXT, "lastVerifiedAt" TIMESTAMP(3) NOT NULL, "status" "PublicationStatus" NOT NULL DEFAULT 'DRAFT');
+CREATE TABLE "LandmarkTranslation" ("id" TEXT PRIMARY KEY, "locale" TEXT NOT NULL, "name" TEXT NOT NULL, "short" TEXT NOT NULL, "description" TEXT NOT NULL, "history" TEXT NOT NULL, "facts" JSONB NOT NULL, "keywords" JSONB NOT NULL, "landmarkId" TEXT NOT NULL REFERENCES "Landmark"("id") ON DELETE CASCADE, UNIQUE("landmarkId", "locale"));
+CREATE TABLE "ImageAsset" ("id" TEXT PRIMARY KEY, "path" TEXT NOT NULL, "creator" TEXT NOT NULL, "sourceUrl" TEXT NOT NULL, "license" TEXT NOT NULL, "attribution" TEXT NOT NULL, "landmarkId" TEXT NOT NULL REFERENCES "Landmark"("id") ON DELETE CASCADE);
+CREATE TABLE "SourceReference" ("id" TEXT PRIMARY KEY, "title" TEXT NOT NULL, "url" TEXT NOT NULL, "publisher" TEXT NOT NULL, "verifiedAt" TIMESTAMP(3) NOT NULL, "landmarkId" TEXT NOT NULL REFERENCES "Landmark"("id") ON DELETE CASCADE);
+CREATE TABLE "CulturalRoute" ("id" TEXT PRIMARY KEY, "slug" TEXT UNIQUE NOT NULL, "transportMode" "TransportMode" NOT NULL);
+CREATE TABLE "RouteTranslation" ("id" TEXT PRIMARY KEY, "locale" TEXT NOT NULL, "title" TEXT NOT NULL, "description" TEXT NOT NULL, "routeId" TEXT NOT NULL REFERENCES "CulturalRoute"("id") ON DELETE CASCADE, UNIQUE("routeId", "locale"));
+CREATE TABLE "RouteStop" ("id" TEXT PRIMARY KEY, "position" INTEGER NOT NULL, "note" TEXT, "routeId" TEXT NOT NULL REFERENCES "CulturalRoute"("id") ON DELETE CASCADE, "landmarkId" TEXT NOT NULL REFERENCES "Landmark"("id") ON DELETE CASCADE, UNIQUE("routeId", "position"));

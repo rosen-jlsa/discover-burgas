@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: discover_burgas
+      POSTGRES_USER: discover
+      POSTGRES_PASSWORD: discover_local
+    ports: ["5432:5432"]
+    volumes: ["discover_burgas_pg:/var/lib/postgresql/data"]
+volumes:
+  discover_burgas_pg:
