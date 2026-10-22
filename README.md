@@ -17,6 +17,8 @@ This repository is an independent competition prototype. It does not claim endor
 
 ![Arena Burgas — Eurovision 2027 visitor page](screenshots/arena-burgas.png)
 
+![The source-backed story of Burgas](screenshots/city-story.png)
+
 ## Working MVP
 
 - Eight sourced locations, including confirmed Eurovision 2027 venue Arena Burgas
@@ -32,6 +34,9 @@ This repository is an independent competition prototype. It does not claim endor
 - PWA manifest, offline explanation, and conservative application-shell service worker
 - Zod manifests, Prisma/PostgreSQL schema, migration, and repeatable seed
 - Unit, browser, QR decode, and automated accessibility checks
+- Bright spring 2027 daylight design, animated editorial headlines, and reduced-motion support
+- Source-backed city and platform story at `/bg/story` and `/en/story`
+- Visitor issue reporting and a token-protected configuration health dashboard at `/admin`
 
 ## Stack
 
@@ -98,6 +103,10 @@ Production deployment and real-phone scanning remain pending because no Vercel/N
 Visitor navigation does **not** require a Google Maps API key. The application uses official Google Maps URLs, Apple Maps unified URLs, and Waze Deep Links, while the in-page discovery map remains Leaflet/OpenStreetMap.
 
 `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is reserved as an optional deployment variable if a future release replaces Leaflet with Google Maps Embed or JavaScript API. Never commit the real key; restrict it to the production domain and only the enabled Maps APIs.
+
+### Protected operations view
+
+Set `ADMIN_DASHBOARD_TOKEN` to a long random value to unlock `/admin`. The dashboard reports whether services are configured but never displays secret values. Visitor reports are held in volatile server memory in this prototype; production persistence should use PostgreSQL.
 
 ## Burgas 2027 information
 

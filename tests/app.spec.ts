@@ -59,3 +59,22 @@ test("homepage has no serious automated accessibility violations", async ({ page
   const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations.filter((v) => ["serious", "critical"].includes(v.impact || ""))).toEqual([]);
 });
+
+test("history story is localized and source-backed", async ({ page }) => {
+  await page.goto("/bg/story");
+  await expect(page.getByRole("heading", { level: 1, name: "Как Бургас стана Бургас." })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Историческа справка/ })).toHaveAttribute("href", /burgas\.bg/);
+});
+
+test("visitors can report an issue without an account", async ({ page }) => {
+  await page.goto("/bg/report");
+  await page.getByLabel("Опиши какво се случи").fill("Тестов сигнал за проверка на формуляра.");
+  await page.getByRole("button", { name: "Изпрати сигнал" }).click();
+  await expect(page.getByRole("status")).toContainText("Сигналът е записан");
+});
+
+test("admin health dashboard stays locked without its token", async ({ page }) => {
+  await page.goto("/admin");
+  await expect(page.getByRole("heading", { name: "System health" })).toBeVisible();
+  await expect(page.getByLabel("Access token")).toBeVisible();
+});

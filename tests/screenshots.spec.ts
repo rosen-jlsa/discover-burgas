@@ -9,7 +9,10 @@ const shots = [
   ["nearby-mobile", "/bg/places/archaeological-museum", { width: 390, height: 844 }],
   ["cultural-route", "/bg/routes/burgas-centre-stories", { width: 1440, height: 1000 }],
   ["qr-demonstration", "/bg/demo", { width: 1280, height: 1000 }],
-  ["printable-sign", "/bg/demo/sign/aquae-calidae", { width: 1024, height: 1100 }]
+  ["printable-sign", "/bg/demo/sign/aquae-calidae", { width: 1024, height: 1100 }],
+  ["city-story", "/bg/story", { width: 1440, height: 1000 }],
+  ["issue-report", "/bg/report", { width: 390, height: 844 }],
+  ["admin-gate", "/admin", { width: 1280, height: 900 }]
 ] as const;
 
 for (const [name, path, viewport] of shots) test(`capture ${name}`, async ({ page }) => {

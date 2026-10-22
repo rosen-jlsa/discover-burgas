@@ -29,12 +29,16 @@ The public prototype currently serves the validated manifest directly. This remo
 - `/{locale}/routes/[slug]` — ordered cultural route
 - `/{locale}/demo` — jury mode
 - `/{locale}/demo/sign/[slug]` — printable sign proposal
+- `/{locale}/story` — sourced city and product history
+- `/{locale}/report` — public issue report form
+- `/admin` — token-protected configuration health and issue inbox
 - `/api/places` and `/api/places/[slug]` — validated published data
 - `/api/qr/[slug]` — SVG or PNG QR output
+- `/api/reports` — validated report intake; protected report listing
 
 ## Resilience and privacy
 
-Location is requested only after pressing “Около мен / Near me”, is held only in component memory, and is never persisted. Favorites use one localStorage key. No cookies, accounts, analytics, or background location are used. If geolocation is denied, manual browsing remains available. If JavaScript or mapping fails, the landmark story and textual nearby links remain server-rendered.
+Location is requested only after pressing “Около мен / Near me”, is held only in component memory, and is never persisted. Favorites use one localStorage key. There are no visitor accounts, analytics, or background location. A short-lived HttpOnly, SameSite=Strict cookie is used only after successful admin authentication. If geolocation is denied, manual browsing remains available. If JavaScript or mapping fails, the landmark story and textual nearby links remain server-rendered.
 
 The service worker caches only the application shell and offline explanation. It does not cache OpenStreetMap tiles or claim offline mapping.
 
@@ -42,5 +46,5 @@ Google Maps URLs, Apple Maps URLs, and Waze Deep Links do not require an API key
 
 ## Security
 
-Zod validates manifest and API filter inputs. Only published records are returned. The application sets `nosniff`, strict referrer policy, frame denial, and a restrictive permissions policy. Secrets are environment variables. There are no write endpoints in the MVP.
+Zod validates manifest, API filters, and issue reports. Only published landmark records are returned. The application sets `nosniff`, strict referrer policy, frame denial, and a restrictive permissions policy. Secrets are environment variables. Admin login uses constant-time token comparison and stores only a one-way-derived value in an HttpOnly cookie. The health view reveals configuration status, never raw secrets. The report endpoint is intentionally minimal; production should add persistence, rate limiting, and abuse controls before a public launch.
 

@@ -2,6 +2,11 @@
 
 Last research verification: **22 October 2026**. Visitor information is intentionally nullable; the application does not publish hours, prices, or accessibility claims where current authoritative data was not confirmed.
 
+## City story
+
+- [Burgas Municipality — Historical overview](https://www.burgas.bg/bg/istoricheska-spravka), accessed 22 October 2026. Used for the settlement layers, Pyrgos, the post-Liberation municipality, the Yambol–Burgas railway, the 1891 urban plan, and the 1903 port.
+- [Burgas Municipality — Integrated Development Plan 2021–2027 public consultation](https://www.burgas.bg/bg/novini/planat-za-integrirano-razvitie-na-obshtina-burgas-2021-2027-g-be-razgledan-na-obshtestveno-obsazhdane), accessed 22 October 2026. Used only to describe published strategic directions; no future outcome is presented as guaranteed.
+
 ## Editorial and visitor sources
 
 | Record | Primary sources |
