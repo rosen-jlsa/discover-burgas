@@ -1,4 +1,4 @@
-import { createHash, timingSafeEqual } from "node:crypto";
+import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 
 export const ADMIN_COOKIE = "discover_burgas_admin";
 
@@ -10,9 +10,15 @@ export function adminIsConfigured() {
   return Boolean(process.env.ADMIN_DASHBOARD_TOKEN?.trim());
 }
 
-export function adminCookieValue() {
+function cookieSignature(expiresAt: string, token: string) {
+  return createHmac("sha256", token).update(`discover-burgas:${expiresAt}`).digest("base64url");
+}
+
+export function adminCookieValue(now = Date.now()) {
   const token = process.env.ADMIN_DASHBOARD_TOKEN?.trim();
-  return token ? digest(`discover-burgas:${token}`).toString("hex") : "";
+  if (!token) return "";
+  const expiresAt = String(now + 4 * 60 * 60 * 1000);
+  return `${expiresAt}.${cookieSignature(expiresAt, token)}`;
 }
 
 export function isValidAdminToken(candidate: string) {
@@ -21,10 +27,14 @@ export function isValidAdminToken(candidate: string) {
   return timingSafeEqual(digest(candidate), digest(expected));
 }
 
-export function isValidAdminCookie(candidate?: string) {
-  const expected = adminCookieValue();
-  if (!expected || !candidate || candidate.length !== expected.length) return false;
-  return timingSafeEqual(Buffer.from(candidate), Buffer.from(expected));
+export function isValidAdminCookie(candidate?: string, now = Date.now()) {
+  const token = process.env.ADMIN_DASHBOARD_TOKEN?.trim();
+  if (!token || !candidate) return false;
+  const [expiresAt, suppliedSignature, ...extra] = candidate.split(".");
+  if (!expiresAt || !suppliedSignature || extra.length || !/^\d+$/.test(expiresAt) || Number(expiresAt) <= now) return false;
+  const expected = cookieSignature(expiresAt, token);
+  if (suppliedSignature.length !== expected.length) return false;
+  return timingSafeEqual(Buffer.from(suppliedSignature), Buffer.from(expected));
 }
 
 export type ServiceStatus = { name: string; environment: string; status: "ready" | "optional" | "missing"; note: string };
@@ -38,5 +48,6 @@ export function getServiceStatuses(): ServiceStatus[] {
     { name: "Supabase server access", environment: "SUPABASE_SECRET_KEY", status: configured("SUPABASE_SECRET_KEY") || configured("SUPABASE_SERVICE_ROLE_KEY") ? "ready" : "missing", note: "Server-only writes and private report inbox. Never sent to browsers." },
     { name: "Google Maps platform", environment: "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY", status: configured("NEXT_PUBLIC_GOOGLE_MAPS_API_KEY") ? "ready" : "optional", note: "Optional. Current Google, Apple and Waze direction links require no key." },
     { name: "Admin dashboard", environment: "ADMIN_DASHBOARD_TOKEN", status: configured("ADMIN_DASHBOARD_TOKEN") ? "ready" : "missing", note: "Protects this private health view." },
+    { name: "Abuse protection", environment: "REPORT_RATE_LIMIT_SECRET", status: configured("REPORT_RATE_LIMIT_SECRET") || configured("ADMIN_DASHBOARD_TOKEN") ? "ready" : "missing", note: "Creates one-way request fingerprints for server-side rate limiting." },
   ];
 }

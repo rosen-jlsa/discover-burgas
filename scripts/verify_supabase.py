@@ -5,6 +5,23 @@ import sys
 import urllib.parse
 import urllib.request
 
+
+def load_local_env(path=".env.local"):
+    """Load a simple Next.js env file without overriding the process environment."""
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as env_file:
+        for raw_line in env_file:
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            name, value = line.split("=", 1)
+            value = value.strip().strip('"').strip("'")
+            os.environ.setdefault(name.strip(), value)
+
+
+load_local_env()
+
 url = os.environ.get("NEXT_PUBLIC_SUPABASE_URL", "").rstrip("/")
 key = os.environ.get("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY", "")
 if not url or not key:

@@ -35,7 +35,7 @@ This repository is an independent competition prototype. It does not claim endor
 - Printable sign proposal and jury demo mode
 - PWA manifest, offline explanation, and conservative application-shell service worker
 - Zod manifests, Supabase/PostgreSQL migrations, RLS policies, and repeatable TypeScript seed
-- Unit, browser, QR decode, and automated accessibility checks
+- Unit, browser, QR decode, five-viewport, keyboard, and multi-page automated accessibility checks
 - Bright spring 2027 daylight design, animated editorial headlines, and reduced-motion support
 - Source-backed city and platform story at `/bg/story` and `/en/story`
 - Visitor issue reporting and a token-protected configuration health dashboard at `/admin`
@@ -111,7 +111,7 @@ Visitor navigation does **not** require a Google Maps API key. The application u
 
 ### Protected operations view
 
-Set `ADMIN_DASHBOARD_TOKEN` to a long random value to unlock `/admin`. Visitor submissions persist through the validated `submit_issue_report` Supabase RPC without exposing table-write privileges. Reading the private inbox additionally requires `SUPABASE_SECRET_KEY` on the server.
+Set `ADMIN_DASHBOARD_TOKEN` to a long random value to unlock `/admin`. Visitor submissions pass through the validated, rate-limited Next.js server endpoint and are written with the server-only Supabase secret. Anonymous and authenticated database roles cannot call the report RPC or read/write the report table directly. Admin sessions are signed and expire after four hours; records older than 90 days are removed on new report submission and protected inbox access.
 
 ## Burgas 2027 information
 

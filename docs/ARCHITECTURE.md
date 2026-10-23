@@ -39,13 +39,13 @@ The MVP optimizes the public journey: scan → story → map → next place → 
 
 ## Resilience and privacy
 
-Location is requested only after pressing “Около мен / Near me”, is held only in component memory, and is never persisted. Favorites use one localStorage key. There are no visitor accounts, analytics, or background location. A short-lived HttpOnly, SameSite=Strict cookie is used only after successful admin authentication. If geolocation is denied, manual browsing remains available. If JavaScript or mapping fails, the landmark story and textual nearby links remain server-rendered.
+Location is requested only after pressing “Около мен / Near me”, is held only in component memory, and is never persisted. Favorites use one localStorage key. There are no visitor accounts, analytics, or background location. A signed, four-hour HttpOnly, SameSite=Strict cookie is used only after successful admin authentication. Visitor reports older than 90 days are removed when a report is submitted or the protected inbox is opened. If geolocation is denied, manual browsing remains available. If JavaScript or mapping fails, the landmark story and textual nearby links remain server-rendered.
 
-The service worker caches only the application shell and offline explanation. It does not cache OpenStreetMap tiles or claim offline mapping.
+The service worker caches only same-origin public localized pages and explicit static shell assets. It never caches `/api/*`, `/admin`, Supabase responses, report data, or OpenStreetMap tiles, and does not claim offline mapping.
 
 Google Maps URLs, Apple Maps URLs, and Waze Deep Links do not require an API key. The Leaflet/OpenStreetMap discovery map remains the resilient default. A future Google Maps Embed or JavaScript implementation may read `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`, but production keys must be domain- and API-restricted and must never enter Git history.
 
 ## Security
 
-Zod validates manifest, API filters, and issue reports. Supabase RLS and explicit grants expose only published landmarks/routes/categories. Visitor reports enter through a `security definer` RPC that repeats length/category validation; report tables remain unreadable and unwritable directly by anonymous users. The application sets `nosniff`, strict referrer policy, frame denial, and a restrictive permissions policy. The secret key is server-only. Admin login uses constant-time token comparison and an HttpOnly cookie. Public launch should add provider-level rate limiting and abuse monitoring.
+Zod validates manifest, API filters, and issue reports. Supabase RLS and explicit grants expose only published landmarks/routes/categories. The report endpoint has a honeypot and a database-backed, privacy-preserving rate limit; only the server-only Supabase role may write reports. The legacy report RPC and migration helper are explicitly revoked from anonymous/authenticated roles. The application sets CSP, HSTS, `nosniff`, strict referrer policy, frame denial, cross-origin isolation headers, and a restrictive permissions policy. Admin login uses constant-time token comparison, rate limiting, and an HMAC-signed expiring cookie. Supabase's security advisor reports no findings after the production-hardening migration.
 

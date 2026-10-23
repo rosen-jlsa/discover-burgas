@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Map, Navigation, QrCode, ScanLine } from "lucide-react";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/types/content";
@@ -15,6 +16,6 @@ export default async function DemoPage({ params }: { params: Promise<{ locale: s
   ] as const;
   return <>
     <section className="page-hero"><div className="shell"><p className="eyebrow" style={{ color: "var(--gold)" }}>{bg ? "3–5 минутна демонстрация" : "3–5 minute demonstration"}</p><h1 className="display">{bg ? "От знак до следваща история." : "From sign to the next story."}</h1><p>{bg ? "Надежден сценарий за жури — без вход, инсталация или симулирано сканиране." : "A reliable jury flow — no login, installation or simulated scan."}</p></div></section>
-    <section className="section"><div className="shell demo-grid"><div className="demo-steps">{steps.map(([Icon, title, text], i) => <article className="demo-step" key={title}><span>{i + 1}</span><div><Icon size={20}/><strong>{title}</strong><small>{text}</small></div></article>)}<Link className="button" href={`/${locale}/map`}>{bg ? "Започни демонстрацията" : "Start the demonstration"}<ArrowRight size={17}/></Link></div><aside className="demo-sign"><p className="eyebrow">{bg ? "Сканирай с истински телефон" : "Scan with a real phone"}</p><h2>{bg ? "Акве Калиде" : "Aquae Calidae"}</h2><img src="/api/qr/aquae-calidae?format=svg" alt={bg ? "QR код към Акве Калиде" : "QR code to Aquae Calidae"}/><p>{bg ? "Сканирай и открий историята на това място." : "Scan and discover the story of this place."}</p><Link className="text-link" href={`/${locale}/demo/sign/aquae-calidae`}>{bg ? "Печатен вариант" : "Printable version"} →</Link></aside></div></section>
+    <section className="section"><div className="shell demo-grid"><div className="demo-steps">{steps.map(([Icon, title, text], i) => <article className="demo-step" key={title}><span>{i + 1}</span><div><Icon size={20}/><strong>{title}</strong><small>{text}</small></div></article>)}<Link className="button" href={`/${locale}/map`}>{bg ? "Започни демонстрацията" : "Start the demonstration"}<ArrowRight size={17}/></Link></div><aside className="demo-sign"><p className="eyebrow">{bg ? "Сканирай с истински телефон" : "Scan with a real phone"}</p><h2>{bg ? "Акве Калиде" : "Aquae Calidae"}</h2><Image unoptimized src="/api/qr/aquae-calidae?format=svg" width={340} height={340} alt={bg ? "QR код към Акве Калиде" : "QR code to Aquae Calidae"}/><p>{bg ? "Сканирай и открий историята на това място." : "Scan and discover the story of this place."}</p><Link className="text-link" href={`/${locale}/demo/sign/aquae-calidae`}>{bg ? "Печатен вариант" : "Printable version"} →</Link></aside></div></section>
   </>;
 }

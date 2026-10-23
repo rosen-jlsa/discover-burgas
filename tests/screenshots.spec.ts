@@ -12,6 +12,7 @@ const shots = [
   ["printable-sign", "/bg/demo/sign/aquae-calidae", { width: 1024, height: 1100 }],
   ["city-story", "/bg/story", { width: 1440, height: 1000 }],
   ["issue-report", "/bg/report", { width: 390, height: 844 }],
+  ["privacy", "/bg/privacy", { width: 1280, height: 1000 }],
   ["admin-gate", "/admin", { width: 1280, height: 900 }]
 ] as const;
 

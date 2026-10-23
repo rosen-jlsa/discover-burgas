@@ -11,7 +11,7 @@ import { copy } from "@/lib/ui";
 import { isLocale } from "@/types/content";
 
 export async function generateStaticParams(){return (await loadPublishedLandmarks()).flatMap((item)=>["bg","en"].map((locale)=>({locale,slug:item.slug})));}
-export async function generateMetadata({params}:{params:Promise<{locale:string;slug:string}>}){const {locale,slug}=await params;const item=await loadLandmark(slug);return item&&isLocale(locale)?{title:item.translations[locale].name,description:item.translations[locale].short}:{};}
+export async function generateMetadata({params}:{params:Promise<{locale:string;slug:string}>}){const {locale,slug}=await params;const item=await loadLandmark(slug);return item&&isLocale(locale)?{title:item.translations[locale].name,description:item.translations[locale].short,alternates:{canonical:`/${locale}/places/${slug}`,languages:{"bg-BG":`/bg/places/${slug}`,en:`/en/places/${slug}`}},openGraph:{title:item.translations[locale].name,description:item.translations[locale].short,url:`/${locale}/places/${slug}`,images:item.images[0]?[{url:item.images[0].path,alt:item.translations[locale].name}]:[]}}:{};}
 
 export default async function PlacePage({params}:{params:Promise<{locale:string;slug:string}>}){
   const {locale,slug}=await params;if(!isLocale(locale))notFound();const all=await loadPublishedLandmarks();const item=all.find((place)=>place.slug===slug);if(!item)notFound();const t=item.translations[locale],ui=copy[locale],image=item.images[0],near=nearby(item,all);const isIsland=item.slug==="st-anastasia-island",isAquae=item.slug==="aquae-calidae";

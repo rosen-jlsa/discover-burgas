@@ -1,35 +1,36 @@
 # QA report
 
-Executed on Windows on **23 October 2026**. Only observed results are recorded.
+Executed on Windows on **24 October 2026**. Only observed results are recorded.
 
 | Check | Result | Evidence |
 |---|---|---|
-| Production build | PASS | `npm run build`; 34 static/SSG pages generated, including bilingual history/report routes, plus API/dynamic routes |
+| Production build | PASS | `npm run build`; Next.js compiled successfully and generated 38 static/SSG pages plus dynamic APIs/routes |
 | Type checking | PASS | `npm run typecheck` |
-| Unit tests | PASS | `npm test`; 9 tests covering manifests, localization/search, publication lookup, route integrity, Haversine ordering, universal map links, QR URL construction, and QR decoding |
-| Browser journeys | PASS | `npm run test:e2e`; 22/22 across desktop Chromium and Pixel 7 emulation |
-| Automated accessibility | PASS | axe-core reported no serious or critical homepage violations in both browser projects |
-| Protected admin session | PASS | Local production server accepted the configured token, set the HttpOnly cookie, rendered `/admin`, and authorized `GET /api/reports` |
-| Rendered screenshot suite | PASS | `npm run screenshots`; 13/13 captures after Leaflet markers rendered |
+| Lint | PASS | `npm run lint`; zero errors and zero warnings |
+| Unit tests | PASS | `npm test`; 5 files and 10 tests covering manifests, localization/search, publication lookup, route integrity, Haversine ordering, universal map links, admin-cookie signing/expiry, QR URL construction, and QR decoding |
+| Browser journeys | PASS | `npm run test:e2e`; 73 passed and 12 intentionally skipped duplicate server proofs, across 375, 390, 768, 1024, and 1440 px projects |
+| Automated accessibility | PASS | axe-core found no serious or critical violations on the homepage at all five sizes and on map, detail, route, demo, story, report, and privacy pages at desktop; keyboard skip-link behavior also passed at all five sizes |
+| Security headers and private caching | PASS | Browser/API checks verified CSP, HSTS, `Cache-Control: no-store` for `/admin` and reports, and that the service worker never caches `/api/*` or `/admin` |
+| Report abuse protection | PASS | Honeypot rejection and the 5-submissions-per-10-minutes database-backed limit were exercised; the sixth request returned `429` with `Retry-After: 600` |
+| Public database bypass regression | PASS | A direct `anon`/publishable-key call to `submit_issue_report` returned HTTP 401 with permission denied |
+| Supabase security advisor | PASS | Live project returned zero security lints after `production_security_hardening` |
+| Supabase migration history | PASS | Live history contains the two baseline migrations and `20261023215907_production_security_hardening` |
+| Supabase backend verification | PASS | `npm run backend:verify`; 8 published records and 0 coordinate/translation/source errors |
+| Screenshot suite | PASS | `npm run screenshots`; 14/14 actual Playwright captures, including privacy and the interactive phone guide |
 | Prisma client generation | PASS | `npm run db:generate` |
-| Supabase cloud migration | PASS | Project `discover-burgas`; schema, RLS policies, grants, and report RPC applied successfully in SQL Editor |
-| Supabase seed | PASS | 8 landmarks, 6 categories, and 1 route upserted; temporary seed policy removed immediately afterward |
-| Python backend verification | PASS | `scripts/verify_supabase.py`; 8 published records, 0 coordinate/translation/source errors |
-| Production dependency audit | PASS | `npm audit --omit=dev`; zero production vulnerabilities reported |
-| Lint | PASS with warnings | `npm run lint`; three Next.js `no-img-element` warnings are limited to server-generated QR endpoints |
+| Dependency audit | PASS | Both `npm audit` and `npm audit --omit=dev` reported zero vulnerabilities |
 
-Browser coverage includes Bulgarian discovery/search, Arena Burgas routing through Google Maps/Apple Maps/Waze, stable language-neutral QR redirect, language switching, local favorite persistence, denied-geolocation fallback, API locale validation, missing slugs, QR SVG response, the four-state interactive phone guide, the source-backed history, issue reporting, the locked admin gate, and accessibility scanning.
+Browser coverage includes Bulgarian discovery/search, Arena Burgas routing through Google Maps/Apple Maps/Waze, stable language-neutral QR redirect, language switching, local favorite persistence, denied-geolocation fallback, API locale validation, missing slugs, QR SVG response, the four-state phone guide, source-backed history, issue reporting, locked admin access, English privacy content, security headers, service-worker cache boundaries, spam/rate-limit controls, keyboard navigation, and accessibility scanning.
 
-Screenshots cover desktop/mobile homepage, discovery map, landmark detail, Arena Burgas, mobile nearby discovery, cultural route, QR demonstration, printable sign, city history, mobile issue reporting, and the protected admin gate.
+## Security-fix verification
 
-## Not executed
+The vulnerable path was **anonymous browser/database caller → public Supabase RPC → private `issue_reports` write**, with an additional risk from long-lived replayable admin cookies and over-broad service-worker caching. The fix routes writes through the validated server endpoint, revokes public RPC/helper execution, enforces deny policies and server-role grants, adds a privacy-preserving database limiter, signs/expiring admin sessions, and excludes sensitive routes from caches. Legitimate report submission and protected admin reads remain covered by browser tests. No security-advisor findings remain.
 
-- Vercel deployment: no project credentials or production domain were supplied.
-- Google Maps Platform key: the inspected Google Cloud project has no linked billing account; keyless Google/Apple/Waze navigation remains fully functional.
-- Final HTTPS QR payload validation and physical smartphone-camera scan: requires the production domain.
-- Manual screen-reader session and a full device lab at 375, 390, 768, 1024, and 1440 px. Responsive CSS and representative desktop/390 px browser tests were executed, but these unexecuted manual checks are not marked PASS.
+## Remaining production gate — not marked PASS
 
-## Known non-production audit note
+- Vercel deployment: the browser and CLI are currently signed out; the repository cannot be imported or configured until the owner completes Vercel authentication.
+- Final HTTPS QR payload validation and physical smartphone-camera scan: requires the deployed production domain.
+- Vercel environment-variable presence and production smoke test: requires the deployment above.
+- Formal legal/privacy review, manual screen-reader session, and physical iOS/Android device lab remain appropriate before an institutional public rollout.
 
-The full npm audit reports five high-severity advisories through development-only ESLint/glob tooling. The production-only audit is clean; npm currently proposes an unavailable/non-safe resolution, so no forced dependency downgrade was applied.
-
+The codebase and live Supabase backend pass the executed release checks. “10/10 public launch” is not claimed until the external Vercel, HTTPS QR, and real-device gates are completed.

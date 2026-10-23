@@ -7,12 +7,12 @@
 - Stable QR redirect, downloadable SVG/PNG codes, and printable proposal
 - Localized stories, source disclosure, licensed-image attribution, maps, nearby discovery, directions, and local favorites
 - Search, categories, map/list parity, manual geolocation, PWA shell, and offline explanation
-- Live Supabase schema, RLS/grants, idempotent seed, Python verification, test suite, screenshot set, and jury guide
+- Live Supabase schema, aligned migration history, RLS/grants, server-only writes, abuse limits, 90-day application cleanup, idempotent seed, Python verification, five-viewport test suite, screenshot set, and jury guide
 
 ## Deployment gate
 
-- Add the server-only Supabase secret to the deployment so the private admin inbox can read submitted reports
-- Deploy to Vercel over HTTPS and set the final base URL
+- Sign in to Vercel, import the existing GitHub repository, and add the documented environment variables
+- Deploy over HTTPS and replace the development base URL with the final Vercel/custom domain
 - Regenerate QR print assets, scan them with real phones, and perform the jury flow on the deployed build
 - Repeat current-hours/fees/accessibility verification before any public launch
 
