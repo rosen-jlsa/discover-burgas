@@ -7,11 +7,11 @@
 - Stable QR redirect, downloadable SVG/PNG codes, and printable proposal
 - Localized stories, source disclosure, licensed-image attribution, maps, nearby discovery, directions, and local favorites
 - Search, categories, map/list parity, manual geolocation, PWA shell, and offline explanation
-- Prisma schema/migration/seed, validation, test suite, screenshot set, and jury guide
+- Live Supabase schema, RLS/grants, idempotent seed, Python verification, test suite, screenshot set, and jury guide
 
 ## Deployment gate
 
-- Provision Neon, run migration and seed, and switch repository reads to Prisma where operational persistence is desired
+- Add the server-only Supabase secret to the deployment so the private admin inbox can read submitted reports
 - Deploy to Vercel over HTTPS and set the final base URL
 - Regenerate QR print assets, scan them with real phones, and perform the jury flow on the deployed build
 - Repeat current-hours/fees/accessibility verification before any public launch

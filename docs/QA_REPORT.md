@@ -1,6 +1,6 @@
 # QA report
 
-Executed on Windows on **22 October 2026**. Only observed results are recorded.
+Executed on Windows on **23 October 2026**. Only observed results are recorded.
 
 | Check | Result | Evidence |
 |---|---|---|
@@ -12,6 +12,9 @@ Executed on Windows on **22 October 2026**. Only observed results are recorded.
 | Protected admin session | PASS | Local production server accepted the configured token, set the HttpOnly cookie, rendered `/admin`, and authorized `GET /api/reports` |
 | Rendered screenshot suite | PASS | `npm run screenshots`; 13/13 captures after Leaflet markers rendered |
 | Prisma client generation | PASS | `npm run db:generate` |
+| Supabase cloud migration | PASS | Project `discover-burgas`; schema, RLS policies, grants, and report RPC applied successfully in SQL Editor |
+| Supabase seed | PASS | 8 landmarks, 6 categories, and 1 route upserted; temporary seed policy removed immediately afterward |
+| Python backend verification | PASS | `scripts/verify_supabase.py`; 8 published records, 0 coordinate/translation/source errors |
 | Production dependency audit | PASS | `npm audit --omit=dev`; zero production vulnerabilities reported |
 | Lint | PASS with warnings | `npm run lint`; three Next.js `no-img-element` warnings are limited to server-generated QR endpoints |
 
@@ -21,8 +24,8 @@ Screenshots cover desktop/mobile homepage, discovery map, landmark detail, Arena
 
 ## Not executed
 
-- PostgreSQL migration and seed: no Neon credentials were supplied and Docker is absent on this machine.
 - Vercel deployment: no project credentials or production domain were supplied.
+- Google Maps Platform key: the inspected Google Cloud project has no linked billing account; keyless Google/Apple/Waze navigation remains fully functional.
 - Final HTTPS QR payload validation and physical smartphone-camera scan: requires the production domain.
 - Manual screen-reader session and a full device lab at 375, 390, 768, 1024, and 1440 px. Responsive CSS and representative desktop/390 px browser tests were executed, but these unexecuted manual checks are not marked PASS.
 

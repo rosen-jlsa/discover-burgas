@@ -14,11 +14,13 @@ const reportSchema = z.object({
 export async function POST(request: Request) {
   const parsed = reportSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Invalid report", details: parsed.error.flatten() }, { status: 400 });
-  return NextResponse.json(addReport(parsed.data), { status: 201 });
+  try { return NextResponse.json(await addReport(parsed.data), { status: 201 }); }
+  catch { return NextResponse.json({ error: "Report storage unavailable" }, { status: 503 }); }
 }
 
 export async function GET() {
   const cookieStore = await cookies();
   if (!isValidAdminCookie(cookieStore.get(ADMIN_COOKIE)?.value)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  return NextResponse.json(getReports());
+  try { return NextResponse.json(await getReports()); }
+  catch { return NextResponse.json({ error: "Report storage unavailable" }, { status: 503 }); }
 }

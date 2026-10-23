@@ -5,16 +5,16 @@ import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { MapExplorer } from "@/components/MapExplorer";
 import { NavigationLinks } from "@/components/NavigationLinks";
-import { getLandmark, publishedLandmarks } from "@/lib/content";
+import { loadLandmark, loadPublishedLandmarks } from "@/lib/backend";
 import { nearby } from "@/lib/geo";
 import { copy } from "@/lib/ui";
 import { isLocale } from "@/types/content";
 
-export function generateStaticParams(){return publishedLandmarks().flatMap((item)=>["bg","en"].map((locale)=>({locale,slug:item.slug})));}
-export async function generateMetadata({params}:{params:Promise<{locale:string;slug:string}>}){const {locale,slug}=await params;const item=getLandmark(slug);return item&&isLocale(locale)?{title:item.translations[locale].name,description:item.translations[locale].short}:{};}
+export async function generateStaticParams(){return (await loadPublishedLandmarks()).flatMap((item)=>["bg","en"].map((locale)=>({locale,slug:item.slug})));}
+export async function generateMetadata({params}:{params:Promise<{locale:string;slug:string}>}){const {locale,slug}=await params;const item=await loadLandmark(slug);return item&&isLocale(locale)?{title:item.translations[locale].name,description:item.translations[locale].short}:{};}
 
 export default async function PlacePage({params}:{params:Promise<{locale:string;slug:string}>}){
-  const {locale,slug}=await params;if(!isLocale(locale))notFound();const item=getLandmark(slug);if(!item)notFound();const t=item.translations[locale],ui=copy[locale],image=item.images[0],near=nearby(item,publishedLandmarks());const isIsland=item.slug==="st-anastasia-island",isAquae=item.slug==="aquae-calidae";
+  const {locale,slug}=await params;if(!isLocale(locale))notFound();const all=await loadPublishedLandmarks();const item=all.find((place)=>place.slug===slug);if(!item)notFound();const t=item.translations[locale],ui=copy[locale],image=item.images[0],near=nearby(item,all);const isIsland=item.slug==="st-anastasia-island",isAquae=item.slug==="aquae-calidae";
   return <>
     <section className="place-hero"><div className="place-hero-bg">{image?<Image src={image.path} alt={t.name} fill priority sizes="100vw"/>:<div className="image-fallback"><span>42° N</span><i>DISCOVER BURGAS / CULTURAL PLACE</i></div>}</div><div className="shell place-hero-content"><Link className="text-link" style={{color:"white"}} href={`/${locale}/map`}><ArrowLeft size={16}/>{locale==="bg"?"Назад към картата":"Back to map"}</Link><div className="place-meta"><span><MapPin size={13}/> {item.area}</span><span><CalendarCheck size={13}/> {ui.verified}: {item.lastVerifiedAt}</span>{isIsland&&<span>{locale==="bg"?"Достъп с кораб":"Boat access"}</span>}{isAquae&&<span>{locale==="bg"?"Необходим е транспорт":"Transport required"}</span>}</div><h1 className="display">{t.name}</h1><p>{t.short}</p><div className="place-actions"><NavigationLinks item={item} locale={locale} compact/><FavoriteButton slug={item.slug} locale={locale}/></div></div></section>
     <section className="section"><div className="shell story-layout"><article className="story-main"><p className="eyebrow">{ui.history}</p><h2>{t.description}</h2><p>{t.history}</p></article><aside className="facts-box"><h2>{ui.facts}</h2><ol>{t.facts.map((fact)=><li key={fact}>{fact}</li>)}</ol></aside></div></section>

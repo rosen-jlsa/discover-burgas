@@ -34,7 +34,7 @@ This repository is an independent competition prototype. It does not claim endor
 - Local-only favorites, no account or tracking
 - Printable sign proposal and jury demo mode
 - PWA manifest, offline explanation, and conservative application-shell service worker
-- Zod manifests, Prisma/PostgreSQL schema, migration, and repeatable seed
+- Zod manifests, Supabase/PostgreSQL migrations, RLS policies, and repeatable TypeScript seed
 - Unit, browser, QR decode, and automated accessibility checks
 - Bright spring 2027 daylight design, animated editorial headlines, and reduced-motion support
 - Source-backed city and platform story at `/bg/story` and `/en/story`
@@ -43,9 +43,9 @@ This repository is an independent competition prototype. It does not claim endor
 
 ## Stack
 
-Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Leaflet, PostgreSQL/Neon, Prisma 7, Zod, Vitest, Playwright, and axe-core. Vercel is the intended application host; Neon is the supported production database.
+Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Leaflet, Supabase PostgreSQL, Zod, Vitest, Playwright, axe-core, and a Python REST verifier. Vercel is the intended application host.
 
-The competition UI reads the version-controlled, Zod-validated manifest in `src/data/landmarks.ts`. This keeps the demo deterministic if a database is unavailable. The Prisma schema and seed mirror that manifest and are ready for a Neon-backed content repository in the next deployment phase.
+The public pages and APIs read live published records from Supabase when `CONTENT_BACKEND=supabase`. The version-controlled, Zod-validated manifest in `src/data/landmarks.ts` remains the auditable seed and an explicit local fallback only.
 
 ## Local setup
 
@@ -61,15 +61,17 @@ Open `http://localhost:3000/bg`. The jury entry point is `http://localhost:3000/
 
 ### Database
 
-For Neon, set both connection strings in `.env.local`, then run:
+Create/link a Supabase project, apply the migrations, then seed and verify:
 
 ```bash
-npm run db:generate
-npm run db:migrate
-npm run db:seed
+npx supabase login
+npx supabase link --project-ref <project-ref>
+npm run supabase:push
+npm run supabase:seed
+npm run backend:verify
 ```
 
-For optional local PostgreSQL:
+The seed requires a server secret, or the documented short-lived RLS seed-token procedure. Never place `SUPABASE_SECRET_KEY` in a `NEXT_PUBLIC_` variable. For a fully local Supabase stack, use `npx supabase start` on a machine with Docker.
 
 ```bash
 docker compose up -d
@@ -90,26 +92,26 @@ npm run screenshots
 
 Playwright browsers may first require `npx playwright install chromium`. See [the QA report](docs/QA_REPORT.md) for results that were actually executed.
 
-## Vercel and Neon deployment
+## Vercel and Supabase deployment
 
-1. Create a Neon PostgreSQL project and copy its pooled and direct connection URLs.
+1. Create a Supabase project and apply `supabase/migrations/`.
 2. Import this repository into Vercel.
-3. Configure `DATABASE_URL`, `DIRECT_URL`, and `NEXT_PUBLIC_APP_BASE_URL=https://<production-domain>`.
-4. Run `npm run db:migrate` and `npm run db:seed` against Neon.
+3. Configure `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, server-only `SUPABASE_SECRET_KEY`, `CONTENT_BACKEND=supabase`, and `NEXT_PUBLIC_APP_BASE_URL=https://<production-domain>`.
+4. Run `npm run supabase:seed` and `npm run backend:verify`.
 5. Deploy, then regenerate/verify printable QR assets against the HTTPS domain.
 6. Complete a real smartphone-camera scan before public presentation.
 
-Production deployment and real-phone scanning remain pending because no Vercel/Neon credentials or production domain were available in this environment.
+The Supabase Free project is provisioned and seeded. Vercel deployment and real-phone scanning remain pending because no Vercel deployment/project was connected and no production domain is available.
 
 ### Maps configuration
 
 Visitor navigation does **not** require a Google Maps API key. The application uses official Google Maps URLs, Apple Maps unified URLs, and Waze Deep Links, while the in-page discovery map remains Leaflet/OpenStreetMap.
 
-`NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is reserved as an optional deployment variable if a future release replaces Leaflet with Google Maps Embed or JavaScript API. Never commit the real key; restrict it to the production domain and only the enabled Maps APIs.
+`NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is reserved for an optional future Google Maps Embed or JavaScript integration. The inspected Google Cloud project currently has no billing account; no paid Maps API or unrestricted key was enabled. If enabled later, restrict a separate website key to the final HTTPS domain and only the required Maps API.
 
 ### Protected operations view
 
-Set `ADMIN_DASHBOARD_TOKEN` to a long random value to unlock `/admin`. The dashboard reports whether services are configured but never displays secret values. Visitor reports are held in volatile server memory in this prototype; production persistence should use PostgreSQL.
+Set `ADMIN_DASHBOARD_TOKEN` to a long random value to unlock `/admin`. Visitor submissions persist through the validated `submit_issue_report` Supabase RPC without exposing table-write privileges. Reading the private inbox additionally requires `SUPABASE_SECRET_KEY` on the server.
 
 ## Burgas 2027 information
 

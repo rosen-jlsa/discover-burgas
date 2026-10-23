@@ -16,9 +16,9 @@ The MVP optimizes the public journey: scan → story → map → next place → 
 
 `src/data/landmarks.ts` is the auditable competition seed manifest. Zod validates each bilingual landmark, image attribution, source, coordinate field, publication state, route, and stop.
 
-`prisma/schema.prisma` models the durable PostgreSQL form: landmarks, translations, images, sources, cultural routes, route translations, and ordered stops. The initial SQL migration is in `prisma/migrations/`; `prisma/seed.ts` replaces dependent records and upserts landmarks, making repeated seed runs deterministic.
+`supabase/migrations/` defines the durable PostgreSQL schema for categories, landmarks, cultural routes, private issue reports, and verification runs. Every exposed table has RLS enabled, explicit grants, and published-only read policies. `scripts/seed-supabase.ts` performs idempotent upserts from the validated manifest.
 
-The public prototype currently serves the validated manifest directly. This removes a database failure mode during jury presentation while preserving a migration path to Neon. Replacing the repository functions with Prisma queries does not change public URLs or component contracts.
+`src/lib/backend.ts` reads live Supabase records in production mode. Manifest fallback is available only when `CONTENT_BACKEND` is not `supabase`, preserving a deterministic offline development path without silently masking a production database failure.
 
 ## Routes
 
@@ -34,7 +34,8 @@ The public prototype currently serves the validated manifest directly. This remo
 - `/admin` — token-protected configuration health and issue inbox
 - `/api/places` and `/api/places/[slug]` — validated published data
 - `/api/qr/[slug]` — SVG or PNG QR output
-- `/api/reports` — validated report intake; protected report listing
+- `/api/reports` — validated persistent report intake; protected server-only listing
+- `/api/health` — non-secret backend/database health
 
 ## Resilience and privacy
 
@@ -46,5 +47,5 @@ Google Maps URLs, Apple Maps URLs, and Waze Deep Links do not require an API key
 
 ## Security
 
-Zod validates manifest, API filters, and issue reports. Only published landmark records are returned. The application sets `nosniff`, strict referrer policy, frame denial, and a restrictive permissions policy. Secrets are environment variables. Admin login uses constant-time token comparison and stores only a one-way-derived value in an HttpOnly cookie. The health view reveals configuration status, never raw secrets. The report endpoint is intentionally minimal; production should add persistence, rate limiting, and abuse controls before a public launch.
+Zod validates manifest, API filters, and issue reports. Supabase RLS and explicit grants expose only published landmarks/routes/categories. Visitor reports enter through a `security definer` RPC that repeats length/category validation; report tables remain unreadable and unwritable directly by anonymous users. The application sets `nosniff`, strict referrer policy, frame denial, and a restrictive permissions policy. The secret key is server-only. Admin login uses constant-time token comparison and an HttpOnly cookie. Public launch should add provider-level rate limiting and abuse monitoring.
 
