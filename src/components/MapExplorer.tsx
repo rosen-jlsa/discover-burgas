@@ -1,5 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { directionsUrl } from "@/lib/geo";
 import { useEffect, useMemo, useState } from "react";
 import { List, LocateFixed, Map as MapIcon, Search } from "lucide-react";
 import type { Landmark, Locale } from "@/types/content";
@@ -9,7 +11,7 @@ import { PlaceCard } from "./PlaceCard";
 const MapCanvas = dynamic(() => import("./MapCanvas"), { ssr: false, loading: () => <div className="map-loading">Loading map…</div> });
 
 export function MapExplorer({ items, locale, compact = false }: { items: Landmark[]; locale: Locale; compact?: boolean }) {
-  const [query, setQuery] = useState(""); const [category, setCategory] = useState(""); const [view, setView] = useState<"map"|"list">("map"); const [selected, setSelected] = useState(items[0]?.slug); const [user, setUser] = useState<[number,number]>(); const [geoMessage, setGeoMessage] = useState(""); const [hydrated, setHydrated] = useState(false);
+  const [query, setQuery] = useState(""); const [category, setCategory] = useState(""); const [view, setView] = useState<"map"|"list">("map"); const [selected, setSelected] = useState<string>(); const [user, setUser] = useState<[number,number]>(); const [geoMessage, setGeoMessage] = useState(""); const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
     // Avoid losing the first outdoor tap on slower devices while the map hydrates.
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -21,6 +23,7 @@ export function MapExplorer({ items, locale, compact = false }: { items: Landmar
     {!compact && <div className="map-toolbar"><label className="search-box"><Search size={18}/><span className="sr-only">{locale === "bg" ? "Търси" : "Search"}</span><input disabled={!hydrated} value={query} onChange={(e)=>{ setQuery(e.target.value); if (e.target.value) setView("list"); }} placeholder={locale === "bg" ? "Търси място или история…" : "Search a place or story…"}/></label><button disabled={!hydrated} className="locate-button" onClick={locate}><LocateFixed size={18}/>{locale === "bg" ? "Около мен" : "Near me"}</button><div className="view-toggle"><button disabled={!hydrated} className={view==="map"?"active":""} onClick={()=>setView("map")} aria-label="Map"><MapIcon size={18}/></button><button disabled={!hydrated} className={view==="list"?"active":""} onClick={()=>setView("list")} aria-label="List"><List size={18}/></button></div></div>}
     {!compact && <div className="filter-row"><button className={!category?"active":""} onClick={()=>setCategory("")}>{locale === "bg" ? "Всички" : "All"}</button>{categories.map((cat)=><button className={category===cat.id?"active":""} onClick={()=>setCategory(cat.id)} key={cat.id}>{cat[locale]}</button>)}</div>}
     <p className={`geo-message ${geoMessage ? "" : "sr-only"}`} role="status" aria-live="polite">{geoMessage}</p>
-    {view === "map" || compact ? <div className="map-layout"><div className="map-panel"><MapCanvas items={filtered} locale={locale} selectedSlug={selected} userLocation={user}/></div>{!compact && <div className="map-results"><div className="results-head"><span>{filtered.length} {locale === "bg" ? "места" : "places"}</span></div>{filtered.map((item,i)=><button className={`map-result ${selected===item.slug?"active":""}`} key={item.slug} onClick={()=>setSelected(item.slug)}><span>0{i+1}</span><div><strong>{item.translations[locale].name}</strong><small>{item.area}</small></div></button>)}</div>}</div> : <div className="places-grid">{filtered.map((item,i)=><PlaceCard item={item} locale={locale} index={i+1} key={item.slug}/>)}</div>}
+    {!compact && filtered.length===0 && <p>{locale==="bg"?"Няма намерени места. Опитай друга дума или категория.":"No places found. Try another word or category."}</p>}
+    {view === "map" || compact ? <div className="map-layout"><div className="map-panel"><MapCanvas items={filtered} locale={locale} selectedSlug={selected} userLocation={user}/></div>{!compact && <div className="map-results"><div className="results-head"><span>{filtered.length} {locale === "bg" ? "места" : "places"}</span></div>{filtered.map((item,i)=><div key={item.slug}><button className={`map-result ${selected===item.slug?"active":""}`} aria-expanded={selected===item.slug} onClick={()=>{setSelected(item.slug);setUser(undefined);}}><span>0{i+1}</span><div><strong>{item.translations[locale].name}</strong><small>{item.area}</small></div></button>{selected===item.slug&&<div className="map-selected-card"><Link className="button" href={`/${locale}/places/${item.slug}`}>{locale==="bg"?"История":"Story"}</Link><a className="button secondary" href={directionsUrl(item)} target="_blank" rel="noreferrer">{locale==="bg"?"Навигация":"Directions"}</a></div>}</div>)}</div>}</div> : <div className="places-grid">{filtered.map((item,i)=><PlaceCard item={item} locale={locale} index={i+1} key={item.slug}/>)}</div>}
   </div>;
 }

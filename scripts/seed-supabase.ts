@@ -1,5 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import { categories, landmarks, routes } from "../src/data/landmarks.ts";
+import { loadEnvConfig } from "@next/env";
+
+loadEnvConfig(process.cwd());
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
 const secretKey = process.env.SUPABASE_SECRET_KEY?.trim() || process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();

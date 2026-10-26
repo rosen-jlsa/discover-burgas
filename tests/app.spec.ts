@@ -102,7 +102,7 @@ test("interactive phone guide explains the four-step journey", async ({ page }) 
   await page.getByRole("tab", { name: /Виж какво е наблизо/ }).click();
   await expect(page.getByRole("heading", { name: "Наблизо до теб" })).toBeVisible();
   await page.getByRole("tab", { name: /любимата карта/ }).click();
-  await expect(page.getByRole("button", { name: /Google Maps/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Google Maps/ })).toHaveAttribute("href", /google.com\/maps\/dir/);
 });
 
 test("English content declares its language and privacy terms", async ({ page }) => {

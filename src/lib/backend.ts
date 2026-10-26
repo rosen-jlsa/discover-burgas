@@ -8,13 +8,23 @@ function rowToLandmark(row: LandmarkRow): Landmark { return landmarkSchema.parse
 function manifestFallbackEnabled() { return process.env.CONTENT_BACKEND !== "supabase"; }
 
 export async function loadPublishedLandmarks(): Promise<Landmark[]> {
+  if (manifestFallbackEnabled()) return manifestLandmarks.filter(item => item.status === "PUBLISHED");
   const client=getSupabaseReadClient();
   if(client){const {data,error}=await client.from("landmarks").select("*").eq("status","PUBLISHED").order("slug");if(!error)return (data as LandmarkRow[]).map(rowToLandmark);if(!manifestFallbackEnabled())throw new Error(`Supabase landmarks query failed: ${error.message}`);console.error("Supabase unavailable; using validated manifest fallback.",error.message);}
   if(!manifestFallbackEnabled()&&!isSupabaseReadable())throw new Error("CONTENT_BACKEND=supabase but Supabase read credentials are missing.");
   return manifestLandmarks.filter((item)=>item.status==="PUBLISHED");
 }
 export async function loadLandmark(slug:string){return (await loadPublishedLandmarks()).find((item)=>item.slug===slug);}
-export async function loadRoutes():Promise<CulturalRoute[]>{const client=getSupabaseReadClient();if(client){const {data,error}=await client.from("cultural_routes").select("id,slug,transport_mode,translations,stops").eq("published",true).order("slug");if(!error)return data.map((row)=>routeSchema.parse({id:row.id,slug:row.slug,transportMode:row.transport_mode,translations:row.translations,stops:row.stops}));if(!manifestFallbackEnabled())throw new Error(`Supabase routes query failed: ${error.message}`);}return manifestRoutes;}
+export async function loadRoutes(): Promise<CulturalRoute[]> {
+  if (manifestFallbackEnabled()) return manifestRoutes;
+  const client = getSupabaseReadClient();
+  if (!client) throw new Error("Supabase public read configuration is missing.");
+  const { data, error } = await client.from("cultural_routes").select("id,slug,transport_mode,translations,stops").eq("published", true).order("slug");
+  if (error) throw new Error("Supabase routes query failed.");
+  const published = new Set((await loadPublishedLandmarks()).map(item => item.slug));
+  return data.map(row => routeSchema.parse({ id: row.id, slug: row.slug, transportMode: row.transport_mode, translations: row.translations, stops: row.stops }))
+    .filter(route => route.stops.every(stop => published.has(stop.landmarkSlug)));
+}
 export async function loadRoute(slug:string){return (await loadRoutes()).find((item)=>item.slug===slug);}
 export async function searchBackendLandmarks(locale:Locale,query="",category="",area=""){const needle=query.trim().toLocaleLowerCase(locale);return (await loadPublishedLandmarks()).filter((item)=>{const t=item.translations[locale];const haystack=[t.name,t.short,t.description,...t.keywords,item.area].join(" ").toLocaleLowerCase(locale);return(!needle||haystack.includes(needle))&&(!category||item.category===category)&&(!area||item.area===area);});}
-export function backendMode(){return isSupabaseReadable()?"supabase":"manifest";}
+export function backendMode(){return manifestFallbackEnabled()?"manifest":"supabase";}

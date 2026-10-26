@@ -20,7 +20,7 @@ export const sourceSchema = z.object({
 
 export const landmarkSchema = z.object({
   id: z.string(), slug: z.string().regex(/^[a-z0-9-]+$/), category: z.string(), municipality: z.string(),
-  area: z.string(), address: z.string().nullable(), latitude: z.number().nullable(), longitude: z.number().nullable(),
+  area: z.string(), address: z.string().nullable(), latitude: z.number().min(-90).max(90).nullable(), longitude: z.number().min(-180).max(180).nullable(),
   officialUrl: z.string().url().nullable(), accessibility: z.string().nullable(), openingHours: z.string().nullable(),
   entryFees: z.string().nullable(), lastVerifiedAt: z.string().date(), status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
   featured: z.boolean().default(false), translations: z.object({ bg: translationSchema, en: translationSchema }),

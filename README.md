@@ -12,8 +12,12 @@ This repository is an independent competition prototype. It does not claim endor
 
 | Desktop discovery | Mobile QR journey |
 |---|---|
-| ![Desktop homepage](screenshots/homepage-desktop.png) | <img src="screenshots/homepage-mobile.png" alt="Mobile homepage" width="280" /> |
-| ![Interactive landmark map](screenshots/interactive-map.png) | <img src="screenshots/nearby-mobile.png" alt="Mobile nearby places" width="280" /> |
+| ![Redesigned desktop homepage](screenshots/redesign/home-1440.png) | <img src="screenshots/redesign/home-390.png" alt="Redesigned mobile homepage" width="280" /> |
+| ![Dining discovery](screenshots/redesign/dining.png) | <img src="screenshots/redesign/stays.png" alt="Accommodation handoff" width="280" /> |
+
+The [editorial redesign screenshots](screenshots/redesign/) show the current white and cobalt concept at 375, 390, 768, 1024 and 1440 px, plus the dining, stays, landmark, route, story and demo screens.
+
+![Redesigned landmark page](screenshots/redesign/detail.png)
 
 ![Arena Burgas — Eurovision 2027 visitor page](screenshots/arena-burgas.png)
 
@@ -36,10 +40,13 @@ This repository is an independent competition prototype. It does not claim endor
 - PWA manifest, offline explanation, and conservative application-shell service worker
 - Zod manifests, Supabase/PostgreSQL migrations, RLS policies, and repeatable TypeScript seed
 - Unit, browser, QR decode, five-viewport, keyboard, and multi-page automated accessibility checks
-- Bright spring 2027 daylight design, animated editorial headlines, and reduced-motion support
+- Bright white and cobalt daylight design, restrained editorial motion, and reduced-motion support
 - Source-backed city and platform story at `/bg/story` and `/en/story`
 - Visitor issue reporting and a token-protected configuration health dashboard at `/admin`
-- Interactive phone walkthrough with four working states and an animated European visitor flag stream
+- Interactive phone walkthrough with four working states and working story, map and directions links
+- White and cobalt editorial redesign with a responsive bento hero, live route preview, working phone guide and a clearer mobile map selection
+- Curated dining page with venue-source links and category filters; external Booking.com and Airbnb search handoff with explicit disclosure
+- Bilingual source and image-credit page at `/bg/sources` and `/en/sources`
 
 ## Stack
 
@@ -88,6 +95,7 @@ npm test
 npm run build
 npm run test:e2e
 npm run screenshots
+npx playwright test --config playwright.redesign.config.ts
 ```
 
 Playwright browsers may first require `npx playwright install chromium`. See [the QA report](docs/QA_REPORT.md) for results that were actually executed.

@@ -9,7 +9,7 @@ function endpoint() {
   const value = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   return value && urlSchema.safeParse(value).success ? value : undefined;
 }
-function readKey() { return process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim() || process.env.SUPABASE_SECRET_KEY?.trim() || process.env.SUPABASE_SERVICE_ROLE_KEY?.trim(); }
+function readKey() { return process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY?.trim(); }
 function adminKey() { return process.env.SUPABASE_SECRET_KEY?.trim() || process.env.SUPABASE_SERVICE_ROLE_KEY?.trim(); }
 
 export function isSupabaseReadable() { return Boolean(endpoint() && readKey()); }

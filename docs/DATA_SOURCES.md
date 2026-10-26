@@ -2,6 +2,12 @@
 
 Last research verification: **22 October 2026**. Visitor information is intentionally nullable; the application does not publish hours, prices, or accessibility claims where current authoritative data was not confirmed.
 
+## Dining and accommodation handoff
+
+Dining summaries were checked on **26 October 2026** against the venues' own websites: [Ti Bar & Kitchen](https://ti-bar.com/bg/za-nas) and [Neptun Restaurant & Bar](https://www.neptunburgas.com/en/restaurant). The app does not republish their photographs, ratings, prices, hours or menus. The cards link to each source and open an external Google Maps search rather than asserting an unverified pinpoint.
+
+The stays page sends visitors to [Booking.com Burgas search](https://www.booking.com/searchresults.html?ss=Burgas%2C%20Bulgaria) and [Airbnb Burgas stays](https://www.airbnb.com/burgas-bulgaria/stays). These are external searches, without live inventory, prices or claimed commercial partnerships. [Booking.com Demand API](https://developers.booking.com/demand/docs/getting-started/prerequisites) requires Managed Affiliate status, an API token and an affiliate ID. Airbnb's [API terms](https://www.airbnb.com/help/article/3418) describe partner programs; no open general accommodation search API was verified for this project.
+
 ## City story
 
 - [Burgas Municipality — Historical overview](https://www.burgas.bg/bg/istoricheska-spravka), accessed 22 October 2026. Used for the settlement layers, Pyrgos, the post-Liberation municipality, the Yambol–Burgas railway, the 1891 urban plan, and the 1903 port.

@@ -33,7 +33,7 @@ export function isValidAdminCookie(candidate?: string, now = Date.now()) {
   const [expiresAt, suppliedSignature, ...extra] = candidate.split(".");
   if (!expiresAt || !suppliedSignature || extra.length || !/^\d+$/.test(expiresAt) || Number(expiresAt) <= now) return false;
   const expected = cookieSignature(expiresAt, token);
-  if (suppliedSignature.length !== expected.length) return false;
+  if (!/^[A-Za-z0-9_-]+$/.test(suppliedSignature) || Buffer.byteLength(suppliedSignature) !== Buffer.byteLength(expected)) return false;
   return timingSafeEqual(Buffer.from(suppliedSignature), Buffer.from(expected));
 }
 

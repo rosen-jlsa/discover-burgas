@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: "Открий Бургас", description: "Всяко място разказва история." },
   icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icon-192.png", sizes: "192x192", type: "image/png" }], apple: "/icon-192.png" }
 };
-export const viewport: Viewport = { themeColor: "#123B52", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#304CFF", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="bg" data-scroll-behavior="smooth"><body><ServiceWorker/>{children}</body></html>;

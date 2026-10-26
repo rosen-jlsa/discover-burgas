@@ -13,6 +13,7 @@ export function nearby(origin: Landmark, all: Landmark[], limit = 3) {
   if (origin.latitude == null || origin.longitude == null) return [];
   return all.filter((item) => item.slug !== origin.slug && item.latitude != null && item.longitude != null)
     .map((item) => ({ item, distanceKm: haversineKm(origin as {latitude:number;longitude:number}, item as {latitude:number;longitude:number}) }))
+    .filter(({ distanceKm }) => distanceKm <= 3)
     .sort((a, b) => a.distanceKm - b.distanceKm).slice(0, limit);
 }
 

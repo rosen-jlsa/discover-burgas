@@ -9,8 +9,10 @@ export function ReportForm({ locale }: { locale: Locale }) {
 
   async function submit(formData: FormData) {
     setState("sending");
-    const response = await fetch("/api/reports", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.fromEntries(formData)) });
-    setState(response.ok ? "sent" : "error");
+    try {
+      const response = await fetch("/api/reports", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.fromEntries(formData)) });
+      setState(response.ok ? "sent" : "error");
+    } catch { setState("error"); }
   }
 
   return <form className="report-form" action={submit}>

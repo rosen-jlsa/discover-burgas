@@ -4,6 +4,10 @@ test-results/
 playwright-report/
 .env
 .env.local
+.env.*
+!.env.example
+.vercel/
+artifacts/
 screenshots/.tmp/
 *.log
 *.tsbuildinfo

@@ -1,5 +1,11 @@
 # QA report
 
+## Editorial redesign verification — 26 October 2026
+
+The redesigned production build succeeded and generated 44 static or pre-rendered pages plus dynamic routes. Type checking and lint completed with no errors. The existing unit suite passed 10/10. The existing desktop journey suite passed 17/17, covering QR redirect, localization, favorites, geolocation denial, reports and security controls. The new focused Playwright suite passed 11/11: 375, 390, 768, 1024 and 1440 px layouts; page runtime errors and horizontal overflow; dining filters; Booking.com/Airbnb external links; keyboard-operated phone tabs; map selection and directions; actual map tiles; QR SVG; and automated accessibility on key screens. Actual screenshots are in [screenshots/redesign](../screenshots/redesign/).
+
+The checks found and corrected low contrast in photographic attribution, the favorite control and city-history accents. The new area for dining contains two entries verified against the venues' own sites. The accommodation buttons open external provider searches; live booking availability and transactions were not tested because no API integration is claimed. HTTPS deployment and a real smartphone-camera scan still require the separate deployment step.
+
 Executed on Windows on **24 October 2026**. Only observed results are recorded.
 
 | Check | Result | Evidence |
