@@ -1,5 +1,24 @@
 # QA report
 
+## HTTPS production deployment — 15 November 2026
+
+The verified `feature/backend-production-core` commit `2ad478a` was deployed to Vercel and is serving the final project domain at [https://discover-burgas.vercel.app](https://discover-burgas.vercel.app). Production is connected to the seeded Supabase project; no paid service or Google Places key was enabled.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Vercel Git connection | PASS | Vercel is connected to `rosen-jlsa/discover-burgas` |
+| Verified branch deployment | PASS | Vercel reports deployment `7bd88sQVM58YXPADaupMFUo36aYi` Ready from `feature/backend-production-core` commit `2ad478a` |
+| Final HTTPS homepage | PASS | `https://discover-burgas.vercel.app/bg` rendered the Bulgarian production experience |
+| Production health | PASS | `/api/health` returned `status=ok`, `backend=supabase`, `database=ready`, and `reportSubmission=server-configured` |
+| Production place catalogue | PASS | `/api/places?locale=bg` returned 14 published records from Supabase |
+| Production QR SVG | PASS | `/api/qr/archaeological-museum?format=svg` returned a rendered QR image |
+| Final QR payload decode | PASS | The production PNG decoded to `https://discover-burgas.vercel.app/places/archaeological-museum` |
+| Production application URL | PASS | `NEXT_PUBLIC_APP_BASE_URL` is the final HTTPS Vercel domain |
+| Production screenshots | PASS | Desktop homepage, 390 px mobile homepage and desktop jury demo were captured from the deployed HTTPS build in `screenshots/production/` |
+| Physical smartphone-camera scan | NOT RUN | Requires the presentation phone; the encoded payload itself was decoded programmatically |
+
+Vercel environment values are configured for Production. The three server-only values are masked in the dashboard; Vercel still recommends converting their dashboard classification from Config to Secret after a fresh owner 2FA verification. This classification does not expose them to the browser and did not block the verified production backend, but it remains a worthwhile account-level hardening step.
+
 ## Backend production-core verification — 15 November 2026
 
 This pass introduced versioned public API contracts, server-side discovery pagination/search, nearby and route endpoints, idempotent report intake, a Supabase-only migration workflow, database contract tests, and GitHub Actions quality gates.
@@ -28,7 +47,7 @@ This pass introduced versioned public API contracts, server-side discovery pagin
 
 The browser suite covers 375, 390, 768, 1024 and 1440 px projects. Desktop-only proofs include full-page accessibility, service-worker cache boundaries, report rate limiting, exact idempotent replay, and conflicting idempotency-key rejection.
 
-The remaining production gates are Vercel environment configuration/deployment, final HTTPS QR regeneration, and a physical smartphone QR scan. Local pgTAP execution still requires Docker, while the committed GitHub Actions database job provides the repeatable compatible-environment check.
+The Vercel environment, HTTPS deployment and final-domain QR decode are complete. A physical smartphone-camera scan remains the final presentation-device check. Local pgTAP execution still requires Docker, while the committed GitHub Actions database job provides the repeatable compatible-environment check.
 
 ## Regional landmark expansion — 14 November 2026
 
@@ -160,14 +179,13 @@ Browser coverage includes Bulgarian discovery/search, Arena Burgas routing throu
 
 The vulnerable path was **anonymous browser/database caller → public Supabase RPC → private `issue_reports` write**, with an additional risk from long-lived replayable admin cookies and over-broad service-worker caching. The fix routes writes through the validated server endpoint, revokes public RPC/helper execution, enforces deny policies and server-role grants, adds a privacy-preserving database limiter, signs/expiring admin sessions, and excludes sensitive routes from caches. Legitimate report submission and protected admin reads remain covered by browser tests. No security-advisor findings remain.
 
-## Remaining production gate — not marked PASS
+## Remaining external checks — not marked PASS
 
-- Vercel deployment: the browser and CLI are currently signed out; the repository cannot be imported or configured until the owner completes Vercel authentication.
-- Final HTTPS QR payload validation and physical smartphone-camera scan: requires the deployed production domain.
-- Vercel environment-variable presence and production smoke test: requires the deployment above.
-- Formal legal/privacy review, manual screen-reader session, and physical iOS/Android device lab remain appropriate before an institutional public rollout.
+- Scan the production QR with the exact presentation phone on both venue Wi-Fi and mobile data.
+- Convert the three server-only Vercel values from dashboard type Config to Secret after fresh owner 2FA verification.
+- Formal legal/privacy review, a manual screen-reader session, and a physical iOS/Android device lab remain appropriate before an institutional public rollout.
 
-The codebase and live Supabase backend pass the executed release checks. “10/10 public launch” is not claimed until the external Vercel, HTTPS QR, and real-device gates are completed.
+The codebase, live Supabase backend, Vercel production deployment and final-domain QR payload pass the executed release checks. No unexecuted real-device or legal review is presented as complete.
 
 ## Demo and cultural map visual update — 1 November 2026
 

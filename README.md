@@ -6,6 +6,8 @@
 
 Bulgarian-first, mobile-first cultural discovery platform built for a competition demonstration. A physical QR code opens a stable, language-neutral landmark URL; the visitor receives a localized historical story, verified sources, an interactive map, nearby places, directions, and a practical cultural route.
 
+**Live production:** [discover-burgas.vercel.app/bg](https://discover-burgas.vercel.app/bg) · [jury demo](https://discover-burgas.vercel.app/bg/demo) · [interactive map](https://discover-burgas.vercel.app/bg/map)
+
 This repository is an independent competition prototype. It does not claim endorsement by Burgas Municipality or any cultural institution, and the printable signs are proposals—not installed infrastructure.
 
 ## Preview
@@ -21,6 +23,8 @@ The live demo uses a bright, product-led presentation inspired by the layout and
 | ![Interactive cultural map](screenshots/aevo-inspired/map-1440.png) | ![Landmark story page](screenshots/aevo-inspired/detail.png) |
 
 The [actual rendered preview set](screenshots/aevo-inspired/) includes the 375, 390, 768, 1024 and 1440 px home layouts, the map, place detail, and jury demo.
+
+The [production capture set](screenshots/production/) was rendered directly from the deployed HTTPS application after the Vercel release completed.
 
 ![QR guide jury demo](screenshots/aevo-inspired/demo.png)
 
@@ -49,7 +53,7 @@ The [actual rendered preview set](screenshots/aevo-inspired/) includes the 375, 
 
 ## Stack
 
-Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Leaflet, Supabase PostgreSQL, Zod, Vitest, Playwright, axe-core, and a Python REST verifier. Vercel is the intended application host.
+Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Leaflet, Supabase PostgreSQL, Zod, Vitest, Playwright, axe-core, and a Python REST verifier. The application is deployed on Vercel with Supabase as the production backend.
 
 The public pages and APIs read live published records from Supabase when `CONTENT_BACKEND=supabase`. The version-controlled, Zod-validated manifest in `src/data/landmarks.ts` remains the auditable seed and an explicit local fallback only.
 
@@ -112,7 +116,7 @@ Playwright browsers may first require `npx playwright install chromium`. See [th
 5. Deploy, then regenerate/verify printable QR assets against the HTTPS domain.
 6. Complete a real smartphone-camera scan before public presentation.
 
-The Supabase Free project is provisioned and seeded. Vercel deployment and real-phone scanning remain pending because no Vercel deployment/project was connected and no production domain is available.
+The Supabase project is provisioned, migrated and seeded. Vercel production is live at [discover-burgas.vercel.app](https://discover-burgas.vercel.app), and the generated QR payload was decoded successfully to the final HTTPS landmark URL. A physical smartphone-camera scan remains the final venue/device check before the presentation.
 
 ### Maps configuration
 

@@ -2,9 +2,9 @@
 
 ## Preparation
 
-Open `/bg/demo` on the presentation computer. Keep the Aquae Calidae sign open on a second screen or printed sheet. Use a phone on mobile data as well as venue Wi-Fi. Keep `/bg/map` available as the geolocation-denied fallback.
+Open [https://discover-burgas.vercel.app/bg/demo](https://discover-burgas.vercel.app/bg/demo) on the presentation computer. Keep the [Aquae Calidae sign](https://discover-burgas.vercel.app/bg/demo/sign/aquae-calidae) open on a second screen or printed sheet. Use a phone on mobile data as well as venue Wi-Fi. Keep [the map](https://discover-burgas.vercel.app/bg/map) available as the geolocation-denied fallback.
 
-Before the jury session, confirm that `NEXT_PUBLIC_APP_BASE_URL` is the final HTTPS domain, regenerate the QR, scan it with a real phone camera, and verify all three external navigation choices. Do not present a localhost QR.
+`NEXT_PUBLIC_APP_BASE_URL` is configured to the final HTTPS domain and the generated production QR has been programmatically decoded to the stable landmark URL. Before the jury session, scan it once with the exact presentation phone and verify all three external navigation choices. Do not present a localhost QR.
 
 ## Flow
 

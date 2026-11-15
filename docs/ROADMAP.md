@@ -10,12 +10,13 @@
 - Search, categories, map/list parity, manual geolocation, PWA shell, and offline explanation
 - Live Supabase schema, aligned migration history, RLS/grants, server-only writes, abuse limits, application cleanup on report/inbox operations, idempotent seed, Python verification, five-viewport test suite, screenshot set, and jury guide
 
-## Deployment gate
+## Deployment status
 
-- Sign in to Vercel, import the existing GitHub repository, and add the documented environment variables
-- Deploy over HTTPS and replace the development base URL with the final Vercel/custom domain
-- Regenerate QR print assets, scan them with real phones, and perform the jury flow on the deployed build
-- Repeat current-hours/fees/accessibility verification before any public launch
+- Completed: GitHub-connected Vercel project and production deployment from `feature/backend-production-core`
+- Completed: final HTTPS base URL at `https://discover-burgas.vercel.app`
+- Completed: production Supabase health/catalogue smoke tests and final-domain QR decode
+- Remaining presentation check: scan the production QR with the exact jury phone on venue Wi-Fi and mobile data
+- Remaining launch governance: repeat current-hours/fees/accessibility verification before any institutional public launch
 
 ## Next improvements
 
