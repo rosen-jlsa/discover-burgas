@@ -5,11 +5,12 @@ export function publishedLandmarks() { return landmarks.filter((item) => item.st
 export function getLandmark(slug: string) { return publishedLandmarks().find((item) => item.slug === slug); }
 export function getRoute(slug: string) { return routes.find((item) => item.slug === slug); }
 export function localizeLandmark(item: (typeof landmarks)[number], locale: Locale) { return { ...item, ...item.translations[locale] }; }
-export function searchLandmarks(locale: Locale, query = "", category = "", area = "") {
+export function searchLandmarks(locale: Locale, query = "", category = "", area = "", interest = "") {
   const needle = query.trim().toLocaleLowerCase(locale);
+  const interestNeedle = interest.trim().toLocaleLowerCase(locale);
   return publishedLandmarks().filter((item) => {
     const t = item.translations[locale];
-    const haystack = [t.name, t.short, t.description, ...t.keywords, item.area].join(" ").toLocaleLowerCase(locale);
-    return (!needle || haystack.includes(needle)) && (!category || item.category === category) && (!area || item.area === area);
+    const haystack = [t.name, t.short, t.description, ...t.keywords, item.area, item.municipality].join(" ").toLocaleLowerCase(locale);
+    return (!needle || haystack.includes(needle)) && (!category || item.category === category) && (!area || item.area === area) && (!interestNeedle || haystack.includes(interestNeedle));
   });
 }

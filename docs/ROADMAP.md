@@ -4,7 +4,7 @@
 
 - Original bilingual identity and responsive editorial UI
 - White and cobalt page system, linked phone journey, searchable dining collection and external accommodation search links
-- Eight sourced location records, including confirmed Eurovision 2027 venue Arena Burgas, and a five-stop central route
+- Fourteen sourced location records, including six carefully modelled regional additions, and three transport-honest routes
 - Stable QR redirect, downloadable SVG/PNG codes, and printable proposal
 - Localized stories, source disclosure, licensed-image attribution, maps, nearby discovery, directions, and local favorites
 - Search, categories, map/list parity, manual geolocation, PWA shell, and offline explanation
@@ -28,6 +28,8 @@
 - Audio guides and accessible audio descriptions
 - Valid routing-provider distance/time calculations and public-transport guidance
 - Additional municipalities and languages using the existing translation model
+- Licensed documentary photography for the six regional records, after creator, source and reuse terms are verified
+- Cape Atia research only if a meaningful public visitor object and safe access point can be established
 
 ## Long-term vision
 

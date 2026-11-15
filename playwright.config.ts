@@ -5,7 +5,16 @@ export default defineConfig({
   timeout: 30_000,
   expect: { timeout: 8_000 },
   use: { baseURL: "http://localhost:3000", trace: "retain-on-failure" },
-  webServer: { command: "npm run start", url: "http://localhost:3000/bg", reuseExistingServer: false },
+  webServer: {
+    command: "npm run start",
+    url: "http://localhost:3000/bg",
+    reuseExistingServer: false,
+    env: {
+      ...process.env,
+      CONTENT_BACKEND: "manifest",
+      REPORT_RATE_LIMIT_SECRET: "discover-burgas-e2e-rate-limit-secret",
+    },
+  },
   projects: [
     { name: "mobile-375", use: { ...devices["iPhone 13 Mini"], browserName: "chromium", viewport: { width: 375, height: 812 }, extraHTTPHeaders: { "x-forwarded-for": "198.51.100.31" } } },
     { name: "mobile", use: { ...devices["Pixel 7"], browserName: "chromium", viewport: { width: 390, height: 844 }, extraHTTPHeaders: { "x-forwarded-for": "198.51.100.32" } } },

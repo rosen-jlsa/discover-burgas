@@ -8,14 +8,15 @@ for(const width of [375,390,768,1024,1440]) test(`homepage layout ${width}`,asyn
  await page.setViewportSize({width,height:900});
  const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
  await page.goto("/bg");
- await expect(page.getByRole("heading",{level:1})).toContainText("Хиляди истории");
- await expect(page.locator(".coast-panel img")).toBeVisible();
- await expect.poll(()=>page.locator(".coast-panel img").evaluate((el:HTMLImageElement)=>el.naturalWidth)).toBeGreaterThan(0);
+ await expect(page.getByRole("heading",{level:1})).toContainText("Градът отблизо.");
+ await expect(page.locator(".aevo-phone-photo img")).toBeVisible();
+ await expect.poll(()=>page.locator(".aevo-phone-photo img").evaluate((el:HTMLImageElement)=>el.naturalWidth)).toBeGreaterThan(0);
+ await expect(page.getByRole("link",{name:"Разгледай картата"})).toHaveAttribute("href","/bg/map");
  await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
  const axe=await new AxeBuilder({page}).analyze();
  expect(axe.violations.filter(v=>["serious","critical"].includes(v.impact??""))).toEqual([]);
  await loadImages(page);
- await page.screenshot({path:`screenshots/redesign/home-${width}.png`,fullPage:true});
+ await page.screenshot({path:`screenshots/aevo-inspired/home-${width}.png`,fullPage:true});
  expect(errors).toEqual([]);
 });
 test("phone guide has keyboard tabs and working destinations",async({page})=>{
@@ -50,7 +51,7 @@ test("public screens and screenshots",async({page})=>{
   const response=await page.goto(path);expect(response?.status()).toBe(200);
   const axe=await new AxeBuilder({page}).analyze();expect(axe.violations.filter(v=>["serious","critical"].includes(v.impact??"")),path).toEqual([]);
   await loadImages(page);
-  await page.screenshot({path:`screenshots/redesign/${name}.png`,fullPage:true});
+  await page.screenshot({path:`screenshots/aevo-inspired/${name}.png`,fullPage:true});
  }
 });
 test("real tiles load and QR remains downloadable",async({page,request})=>{

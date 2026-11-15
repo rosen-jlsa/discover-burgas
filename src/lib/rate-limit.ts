@@ -46,7 +46,7 @@ export async function consumeRateLimit(
   windowSeconds: number,
 ) {
   const key = fingerprint(request, action);
-  const admin = getSupabaseAdminClient();
+  const admin = process.env.CONTENT_BACKEND === "supabase" ? getSupabaseAdminClient() : undefined;
   if (!admin) {
     if (process.env.CONTENT_BACKEND === "supabase") throw new Error("Supabase rate limiting is unavailable.");
     return consumeMemory(`${action}:${key}`, limit, windowSeconds);

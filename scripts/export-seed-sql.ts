@@ -1,4 +1,6 @@
 import { categories, landmarks, routes } from "../src/data/landmarks.ts";
+import { writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const q = (value: unknown) => `'${String(value).replaceAll("'", "''")}'`;
 const json = (value: unknown) => `${q(JSON.stringify(value))}::jsonb`;
@@ -10,4 +12,11 @@ const statements = [
   ...routes.map((route) => `insert into public.cultural_routes (id,slug,transport_mode,translations,stops,published,updated_at) values (${q(route.id)},${q(route.slug)},${q(route.transportMode)},${json(route.translations)},${json(route.stops)},true,now()) on conflict (id) do update set slug=excluded.slug,transport_mode=excluded.transport_mode,translations=excluded.translations,stops=excluded.stops,published=true,updated_at=now();`),
   `select (select count(*) from public.landmarks) as landmarks, (select count(*) from public.cultural_routes) as routes;`
 ];
-console.log("begin;\n" + statements.join("\n") + "\ncommit;");
+const sql = "begin;\n" + statements.join("\n") + "\ncommit;\n";
+if (process.argv.includes("--stdout")) {
+  process.stdout.write(sql);
+} else {
+  const destination = resolve(process.cwd(), "supabase", "seed.sql");
+  writeFileSync(destination, sql, "utf8");
+  console.log(`Wrote ${destination}`);
+}

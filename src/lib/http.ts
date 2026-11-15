@@ -1,8 +1,15 @@
 import { NextResponse } from "next/server";
 
 export const noStore = { "Cache-Control": "private, no-store, max-age=0" };
-export function apiError(error: string, status: number) {
-  return NextResponse.json({ error }, { status, headers: noStore });
+export const publicCache = { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" };
+
+export type ApiErrorCode = "INVALID_REQUEST" | "NOT_FOUND" | "UNAUTHORIZED" | "RATE_LIMITED" | "CONFLICT" | "UNAVAILABLE";
+
+export function apiError(message: string, status: number, code: ApiErrorCode = "INVALID_REQUEST", details?: unknown) {
+  return NextResponse.json(
+    { error: { code, message, ...(details === undefined ? {} : { details }) } },
+    { status, headers: noStore },
+  );
 }
 
 export function sameOrigin(request: Request) {

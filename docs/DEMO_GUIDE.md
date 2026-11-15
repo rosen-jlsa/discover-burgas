@@ -8,17 +8,19 @@ Before the jury session, confirm that `NEXT_PUBLIC_APP_BASE_URL` is the final HT
 
 ## Flow
 
-**0:00–0:35 — The problem.** On the homepage, explain that people pass meaningful places without an immediate, trustworthy story or a practical next stop.
+**0:00–0:30 — The problem.** On the homepage, explain that people often stand beside a meaningful place without an immediate, trustworthy story or a practical next stop.
 
-**0:35–1:10 — Discovery.** Open the map. Search for “Арена” or “Акве”, switch between map and list, and point out the eight sourced records and transport distinctions.
+**0:30–1:00 — One product, one journey.** Show the four-step phone guide: QR sign → story → map → next destination. Stress that there is no install or registration.
 
-**1:10–2:10 — The QR innovation.** Show the printable sign proposal. Scan its real QR with the phone. Emphasize that `/places/aquae-calidae` is a stable route and that no install or login is required.
+**1:00–1:50 — The real QR.** Open the printable Aquae Calidae sign and scan it with the phone. Show that the stable `/places/aquae-calidae` address resolves to the localized page. Point out the verified story, source cards, image credit, visitor-information uncertainty state and external navigation choices.
 
-**2:10–3:00 — Story to action.** On the mobile landmark page, show the verified story, image attribution, source disclosure, location, “Упътване”, save button, and nearby places.
+**1:50–2:30 — From a place to the city.** Open the map. Search for “Акве”, switch between map and list, then choose “Бургас”. Explain that the same validated record powers the QR, story, map marker, search and directions.
 
-**3:00–3:40 — Continue exploring.** Open a nearby destination or return to the central route. Show Google Maps, Apple Maps, and Waze choices, then explain that the selected external app handles current turn-by-turn directions.
+**2:30–3:25 — From Burgas to the region.** Choose “Около Бургас”. Open **Старинен Несебър** and show the UNESCO source, then briefly open **Посетителски пристан при резерват „Ропотамо“**. Explain why the product marks the permitted visitor pier rather than an arbitrary point inside a strict reserve.
 
-**3:40–4:15 — Public value and credibility.** Mention Bulgarian-first access, English localization, list fallback, opt-in location, nullable unverified visitor data, licensed images, and the explicit non-municipal disclaimer.
+**3:25–4:10 — Transport-honest routes.** Open the south-coast route. Show that it is labelled mixed transport, not walking. Mention the separate north-coast driving route and the unchanged central Burgas walking route.
+
+**4:10–4:40 — Credibility and scale.** Close with fourteen bilingual records, nullable operational data, source provenance, licensed imagery or honest fallbacks, accessible list mode and stable QR slugs. Explain that the architecture scales across the Burgas region without becoming an unsourced tourism directory.
 
 ## Fallbacks
 
@@ -26,4 +28,5 @@ Before the jury session, confirm that `NEXT_PUBLIC_APP_BASE_URL` is the final HT
 - If tiles fail, use the adjacent landmark list and directions links.
 - If Wi-Fi fails, show previously loaded pages and the offline explanation; do not claim offline maps.
 - If phone scanning is unavailable, click the visible QR destination from demo mode while stating it is the same URL encoded in the code.
+- If a seasonal service is unavailable, do not improvise a schedule. Show the official source link and the honest empty visitor-information state.
 

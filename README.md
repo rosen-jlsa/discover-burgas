@@ -1,4 +1,4 @@
-![Discover Burgas — independent host-city cultural companion](docs/assets/discover-burgas-banner.svg)
+![Discover Burgas — cultural discovery guide](screenshots/aevo-inspired/home-1440.png)
 
 # Открий Бургас / Discover Burgas
 
@@ -10,41 +10,40 @@ This repository is an independent competition prototype. It does not claim endor
 
 ## Preview
 
-| Desktop discovery | Mobile QR journey |
+The live demo uses a bright, product-led presentation inspired by the layout and storytelling rhythm of modern app launch sites: concise promise, a real mobile-place preview, restrained emerald motion, and spacious feature sections. Discover Burgas keeps its own writing, heritage photography, data, and brand. The design rules are in [docs/DESIGN_DIRECTION.md](docs/DESIGN_DIRECTION.md).
+
+| Home — desktop | Home — mobile |
 |---|---|
-| ![Redesigned desktop homepage](screenshots/redesign/home-1440.png) | <img src="screenshots/redesign/home-390.png" alt="Redesigned mobile homepage" width="280" /> |
-| ![Dining discovery](screenshots/redesign/dining.png) | <img src="screenshots/redesign/stays.png" alt="Accommodation handoff" width="280" /> |
+| ![Discover Burgas at desktop width](screenshots/aevo-inspired/home-1440.png) | <img src="screenshots/aevo-inspired/home-390.png" alt="Discover Burgas at mobile width" width="260" /> |
 
-The [editorial redesign screenshots](screenshots/redesign/) show the current white and cobalt concept at 375, 390, 768, 1024 and 1440 px, plus the dining, stays, landmark, route, story and demo screens.
+| Interactive map | Landmark page |
+|---|---|
+| ![Interactive cultural map](screenshots/aevo-inspired/map-1440.png) | ![Landmark story page](screenshots/aevo-inspired/detail.png) |
 
-![Redesigned landmark page](screenshots/redesign/detail.png)
+The [actual rendered preview set](screenshots/aevo-inspired/) includes the 375, 390, 768, 1024 and 1440 px home layouts, the map, place detail, and jury demo.
 
-![Arena Burgas — Eurovision 2027 visitor page](screenshots/arena-burgas.png)
-
-![The source-backed story of Burgas](screenshots/city-story.png)
-
-![Interactive four-step mobile guide](screenshots/phone-guide.png)
+![QR guide jury demo](screenshots/aevo-inspired/demo.png)
 
 ## Working MVP
 
-- Eight sourced locations, including confirmed Eurovision 2027 venue Arena Burgas
+- Fourteen sourced locations across Burgas, Nessebar, Pomorie, Sozopol and Primorsko, including confirmed Eurovision 2027 venue Arena Burgas
 - Bulgarian and English public routes
 - Stable QR targets at `/places/[slug]`
 - SVG and PNG QR downloads generated from `NEXT_PUBLIC_APP_BASE_URL`
 - Leaflet/OpenStreetMap discovery with search, categories, map/list views, opt-in location, and a text fallback
 - Haversine-based nearby recommendations
 - One-tap routing through Google Maps, Apple Maps, or Waze using keyless universal links
-- Five-stop central walking route; Aquae Calidae is transport-dependent and St. Anastasia is boat-dependent
+- Five-stop central walking route plus north-coast driving and south-coast mixed regional routes; Aquae Calidae is transport-dependent and St. Anastasia is boat-dependent
 - Local-only favorites, no account or tracking
 - Printable sign proposal and jury demo mode
 - PWA manifest, offline explanation, and conservative application-shell service worker
 - Zod manifests, Supabase/PostgreSQL migrations, RLS policies, and repeatable TypeScript seed
 - Unit, browser, QR decode, five-viewport, keyboard, and multi-page automated accessibility checks
-- Bright white and cobalt daylight design, restrained editorial motion, and reduced-motion support
+- Bright, phone-led product presentation with a compact capsule navigation, emerald accent, restrained motion, and reduced-motion support
 - Source-backed city and platform story at `/bg/story` and `/en/story`
 - Visitor issue reporting and a token-protected configuration health dashboard at `/admin`
 - Interactive phone walkthrough with four working states and working story, map and directions links
-- White and cobalt editorial redesign with a responsive bento hero, live route preview, working phone guide and a clearer mobile map selection
+- Centered mobile-place preview with working map, QR, route, and local-favorite links; full-screen map and place stories remain accessible below
 - Curated dining page with venue-source links and category filters; external Booking.com and Airbnb search handoff with explicit disclosure
 - Bilingual source and image-credit page at `/bg/sources` and `/en/sources`
 
@@ -56,7 +55,7 @@ The public pages and APIs read live published records from Supabase when `CONTEN
 
 ## Local setup
 
-Requirements: Node.js 20.19+ and npm. Docker is optional.
+Requirements: Node.js 22 and npm. Docker is required only for the optional local Supabase stack.
 
 ```bash
 npm install
@@ -78,13 +77,16 @@ npm run supabase:seed
 npm run backend:verify
 ```
 
-The seed requires a server secret, or the documented short-lived RLS seed-token procedure. Never place `SUPABASE_SECRET_KEY` in a `NEXT_PUBLIC_` variable. For a fully local Supabase stack, use `npx supabase start` on a machine with Docker.
+The seed requires a server secret, or the documented short-lived RLS seed-token procedure. Never place `SUPABASE_SECRET_KEY` in a `NEXT_PUBLIC_` variable. For a fully local Supabase stack, use the repository scripts on a machine with Docker:
 
 ```bash
-docker compose up -d
+npm run supabase:start
+npm run supabase:reset
+npm run supabase:lint
+npm run supabase:test
 ```
 
-Use `postgresql://discover:discover_local@localhost:5432/discover_burgas` for both local database variables. Docker was not available on the implementation machine, so the included Compose path is documented but was not executed.
+Supabase is the only supported database workflow. The previous parallel Prisma schema and generated client were removed to prevent migration drift. Docker was not available on the implementation machine, so local pgTAP execution remains a CI/compatible-machine gate.
 
 ## Quality commands
 
@@ -95,6 +97,7 @@ npm test
 npm run build
 npm run test:e2e
 npm run screenshots
+npm run screenshots:design
 npx playwright test --config playwright.redesign.config.ts
 ```
 
@@ -115,7 +118,7 @@ The Supabase Free project is provisioned and seeded. Vercel deployment and real-
 
 Visitor navigation does **not** require a Google Maps API key. The application uses official Google Maps URLs, Apple Maps unified URLs, and Waze Deep Links, while the in-page discovery map remains Leaflet/OpenStreetMap.
 
-`NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is reserved for an optional future Google Maps Embed or JavaScript integration. The inspected Google Cloud project currently has no billing account; no paid Maps API or unrestricted key was enabled. If enabled later, restrict a separate website key to the final HTTPS domain and only the required Maps API.
+Dining venue photography supports the official Google Places API (New) via the server-only `GOOGLE_PLACES_API_KEY`. Add this key only after enabling Places API (New) and billing in Google Cloud; restrict it to Places API and set quotas/budget alerts. Never add it with the `NEXT_PUBLIC_` prefix or commit a real value. With no key configured, the cards use a branded illustrative fallback. The venue-photo endpoint is live-requested and sends `Cache-Control: no-store` to respect Google Places content rules. Existing Google/Apple/Waze direction links do not need a key. See [Google Place Photos](https://developers.google.com/maps/documentation/places/web-service/place-photos) and [DATA_SOURCES](docs/DATA_SOURCES.md).
 
 ### Protected operations view
 
@@ -130,6 +133,7 @@ This repository is an independent cultural-technology prototype and is not affil
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
+- [Backend and API contracts](docs/BACKEND.md)
 - [Data and image sources](docs/DATA_SOURCES.md)
 - [QR system](docs/QR_SYSTEM.md)
 - [3–5 minute jury demo](docs/DEMO_GUIDE.md)

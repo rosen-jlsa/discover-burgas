@@ -8,6 +8,8 @@ const shots = [
   ["arena-burgas", "/bg/places/arena-burgas", { width: 1440, height: 1000 }],
   ["nearby-mobile", "/bg/places/archaeological-museum", { width: 390, height: 844 }],
   ["cultural-route", "/bg/routes/burgas-centre-stories", { width: 1440, height: 1000 }],
+  ["regional-landmark", "/bg/places/ancient-nessebar", { width: 1440, height: 1000 }],
+  ["regional-route", "/bg/routes/south-coast-discovery", { width: 1440, height: 1000 }],
   ["qr-demonstration", "/bg/demo", { width: 1280, height: 1000 }],
   ["printable-sign", "/bg/demo/sign/aquae-calidae", { width: 1024, height: 1100 }],
   ["city-story", "/bg/story", { width: 1440, height: 1000 }],
@@ -19,7 +21,7 @@ const shots = [
 for (const [name, path, viewport] of shots) test(`capture ${name}`, async ({ page }) => {
   await page.setViewportSize(viewport);
   await page.goto(path);
-  if (["homepage-desktop", "homepage-mobile", "interactive-map", "landmark-detail", "arena-burgas", "nearby-mobile", "cultural-route"].includes(name)) {
+  if (["homepage-desktop", "homepage-mobile", "interactive-map", "landmark-detail", "arena-burgas", "nearby-mobile", "cultural-route", "regional-landmark", "regional-route"].includes(name)) {
     await page.locator(".leaflet-marker-icon").first().waitFor({ state: "visible" });
   }
   await page.evaluate(() => Array.from(document.images)

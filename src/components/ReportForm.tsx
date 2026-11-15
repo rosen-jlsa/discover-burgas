@@ -1,16 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Locale } from "@/types/content";
 
 export function ReportForm({ locale }: { locale: Locale }) {
   const isBg = locale === "bg";
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const idempotencyKey = useRef<string | null>(null);
 
   async function submit(formData: FormData) {
     setState("sending");
     try {
-      const response = await fetch("/api/reports", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(Object.fromEntries(formData)) });
+      idempotencyKey.current ??= crypto.randomUUID();
+      const response = await fetch("/api/reports", {
+        method: "POST",
+        headers: { "content-type": "application/json", "Idempotency-Key": idempotencyKey.current },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+      if (response.ok) idempotencyKey.current = null;
       setState(response.ok ? "sent" : "error");
     } catch { setState("error"); }
   }

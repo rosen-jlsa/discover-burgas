@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 test("Bulgarian discovery journey", async ({ page }) => {
   await page.goto("/bg");
-  await expect(page.getByRole("heading", { name: /Един град/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Градът отблизо/ })).toBeVisible();
   await page.getByRole("link", { name: "Разгледай картата" }).first().click();
   await expect(page).toHaveURL(/\/bg\/map/);
   await page.getByPlaceholder("Търси място или история…").fill("Акве");
@@ -46,12 +46,54 @@ test("map keeps a useful fallback when geolocation is denied", async ({ page, co
   await expect(page.getByRole("status")).toContainText("ръчното разглеждане");
 });
 
+test("regional discovery separates Burgas from destinations around the city", async ({ page }) => {
+  await page.goto("/bg/map");
+  await page.getByRole("button", { name: "Около Бургас", exact: true }).click();
+  await page.getByRole("button", { name: "Списък" }).click();
+  await expect(page.getByRole("heading", { name: "Старинен Несебър" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Посетителски пристан при резерват „Ропотамо“" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Часовника" })).toHaveCount(0);
+});
+
+test("new regional landmarks keep Bulgarian and English content parity", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "One bilingual content proof is sufficient.");
+  await page.goto("/bg/places/ancient-nessebar");
+  await expect(page.getByRole("heading", { level: 1, name: "Старинен Несебър" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /UNESCO World Heritage Centre/ }).first()).toBeVisible();
+  await page.goto("/en/places/sozopol-archaeological-museum");
+  await expect(page.getByRole("heading", { level: 1, name: "Sozopol Archaeological Museum" })).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+});
+
+test("regional QR and excursion routes resolve", async ({ request }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "One server-side route proof is sufficient.");
+  const qr = await request.get("/api/qr/pomorie-salt-museum?format=svg");
+  expect(qr.ok()).toBeTruthy();
+  expect(await request.get("/bg/routes/north-coast-heritage")).toBeOK();
+  expect(await request.get("/en/routes/south-coast-discovery")).toBeOK();
+});
+
 test("public APIs validate locale, 404, and QR formats", async ({ request }) => {
-  expect((await request.get("/api/places?locale=bg")).ok()).toBeTruthy();
+  const paginated = await request.get("/api/places?locale=bg&page=1&pageSize=3&scope=burgas");
+  expect(paginated.ok()).toBeTruthy();
+  const paginatedBody = await paginated.json();
+  expect(paginatedBody.items).toHaveLength(3);
+  expect(paginatedBody.pagination.pageSize).toBe(3);
+  const filtered = await request.get("/api/places?locale=bg&area=%D0%A6%D0%B5%D0%BD%D1%82%D1%8A%D1%80&interest=%D0%BC%D1%83%D0%B7%D0%B5%D0%B9");
+  expect(filtered.ok()).toBeTruthy();
+  expect((await filtered.json()).items.every((item: { area: string }) => item.area === "Център")).toBeTruthy();
   expect((await request.get("/api/places?locale=de")).status()).toBe(400);
+  expect((await request.get("/api/places?unknown=value")).status()).toBe(400);
   expect((await request.get("/api/places/not-real")).status()).toBe(404);
+  const nature = await request.get("/api/places?locale=en&category=nature");
+  expect((await nature.json()).items.map((item: { slug: string }) => item.slug)).toContain("ropotamo-boat-pier");
   const qr = await request.get("/api/qr/aquae-calidae?format=svg");
   expect(qr.ok()).toBeTruthy(); expect(qr.headers()["content-type"]).toContain("image/svg+xml");
+  const nearby = await request.get("/api/places/burgas-clock/nearby?locale=bg&limit=2&radiusKm=3");
+  expect((await nearby.json()).items).toHaveLength(2);
+  const walking = await request.get("/api/routes?locale=en&transportMode=WALKING");
+  expect((await walking.json()).items).toHaveLength(1);
+  expect((await request.get("/api/routes/burgas-centre-stories?locale=en")).ok()).toBeTruthy();
 });
 
 test("homepage has no serious automated accessibility violations", async ({ page }) => {
@@ -80,7 +122,7 @@ test("keyboard users can skip directly to the main content", async ({ page }) =>
 
 test("history story is localized and source-backed", async ({ page }) => {
   await page.goto("/bg/story");
-  await expect(page.getByRole("heading", { level: 1, name: "Как Бургас стана Бургас." })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Езера. Пристанище. Бургас." })).toBeVisible();
   await expect(page.getByRole("link", { name: /Историческа справка/ })).toHaveAttribute("href", /burgas\.bg/);
 });
 
@@ -107,7 +149,7 @@ test("interactive phone guide explains the four-step journey", async ({ page }) 
 
 test("English content declares its language and privacy terms", async ({ page }) => {
   await page.goto("/en/privacy");
-  await expect(page.locator('[lang="en"]')).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.getByRole("heading", { level: 1, name: "Minimal data. A clear purpose." })).toBeVisible();
   await expect(page.getByText(/target maximum of 90 days/)).toBeVisible();
 });
@@ -138,14 +180,29 @@ test("service worker never caches API responses", async ({ page }, testInfo) => 
 
 test("report endpoint rejects bots and rate-limits repeated submissions", async ({ request }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop", "One server-side rate-limit proof is sufficient.");
-  const bot = await request.post("/api/reports", { data: { category: "other", page: "/bg", message: "Automated invalid submission", website: "spam.example" } });
+  const bot = await request.post("/api/reports", { headers: { "Idempotency-Key": crypto.randomUUID() }, data: { category: "other", page: "/bg", message: "Automated invalid submission", website: "spam.example" } });
   expect(bot.status()).toBe(400);
   const headers = { "x-vercel-forwarded-for": `198.51.100.${20 + Math.floor(Date.now() / 1000) % 180}` };
   for (let index = 0; index < 5; index += 1) {
-    const accepted = await request.post("/api/reports", { headers, data: { category: "other", page: "/bg", message: `Rate limit verification report ${index}` } });
+    const accepted = await request.post("/api/reports", { headers: { ...headers, "Idempotency-Key": crypto.randomUUID() }, data: { category: "other", page: "/bg", message: `Rate limit verification report ${index}` } });
     expect(accepted.status()).toBe(201);
   }
-  const limited = await request.post("/api/reports", { headers, data: { category: "other", page: "/bg", message: "Rate limit verification report blocked" } });
+  const limited = await request.post("/api/reports", { headers: { ...headers, "Idempotency-Key": crypto.randomUUID() }, data: { category: "other", page: "/bg", message: "Rate limit verification report blocked" } });
   expect(limited.status()).toBe(429);
   expect(limited.headers()["retry-after"]).toBe("600");
+});
+
+test("report submissions are idempotent", async ({ request }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "One server-side idempotency proof is sufficient.");
+  const key = crypto.randomUUID();
+  const headers = { "Idempotency-Key": key, "x-vercel-forwarded-for": "198.51.100.210" };
+  const data = { category: "content", page: "/bg/story", message: "Idempotency verification report." };
+  const created = await request.post("/api/reports", { headers, data });
+  expect(created.status()).toBe(201);
+  const replayed = await request.post("/api/reports", { headers, data });
+  expect(replayed.status()).toBe(200);
+  expect(replayed.headers()["idempotency-replayed"]).toBe("true");
+  expect((await replayed.json()).id).toBe((await created.json()).id);
+  const conflict = await request.post("/api/reports", { headers, data: { ...data, message: "A conflicting report payload." } });
+  expect(conflict.status()).toBe(422);
 });
