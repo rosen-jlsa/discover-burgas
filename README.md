@@ -12,7 +12,7 @@ This repository is an independent competition prototype. It does not claim endor
 
 ## Preview
 
-The live demo uses a bright, product-led presentation inspired by the layout and storytelling rhythm of modern app launch sites: concise promise, a real mobile-place preview, restrained emerald motion, and spacious feature sections. Discover Burgas keeps its own writing, heritage photography, data, and brand. The design rules are in [docs/DESIGN_DIRECTION.md](docs/DESIGN_DIRECTION.md).
+The live demo uses a bright, product-led presentation inspired by the layout and storytelling rhythm of modern app launch sites: concise promise, a real mobile-place preview, restrained spectral motion, and spacious feature sections. Discover Burgas keeps its own writing, heritage photography, data, and brand. The design rules are in [docs/DESIGN_DIRECTION.md](docs/DESIGN_DIRECTION.md).
 
 | Home — desktop | Home — mobile |
 |---|---|
@@ -43,7 +43,7 @@ The [production capture set](screenshots/production/) was rendered directly from
 - PWA manifest, offline explanation, and conservative application-shell service worker
 - Zod manifests, Supabase/PostgreSQL migrations, RLS policies, and repeatable TypeScript seed
 - Unit, browser, QR decode, five-viewport, keyboard, and multi-page automated accessibility checks
-- Bright, phone-led product presentation with a compact capsule navigation, emerald accent, restrained motion, and reduced-motion support
+- Bright, phone-led product presentation with a compact capsule navigation, an original violet–magenta–cyan stage palette, restrained motion, and reduced-motion support
 - Source-backed city and platform story at `/bg/story` and `/en/story`
 - Visitor issue reporting and a token-protected configuration health dashboard at `/admin`
 - Interactive phone walkthrough with four working states and working story, map and directions links

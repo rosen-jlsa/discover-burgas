@@ -8,7 +8,8 @@ The Aevo reference informs layout and pacing only. Discover Burgas keeps its own
 
 ## Visual rules
 
-- **Bright shell, strong type.** Use white and soft neutral surfaces, near-black typography, one vivid green accent, and restrained secondary color. Keep long-form text readable outdoors.
+- **Bright shell, strong type.** Use white and soft lavender surfaces, deep-violet typography, and a controlled violet–magenta–cyan spectrum inspired by a live music stage and the Black Sea. Keep long-form text readable outdoors.
+- **Original event energy.** The palette may evoke the movement, light, and inclusivity of an international music event, but it must not reproduce official Eurovision logos or imply an official partnership.
 - **Show the product immediately.** The centered landing hero pairs a short, direct promise with a real mobile-place preview, a live map action, and the no-install QR workflow.
 - **Give every section a job.** Use generous space and alternating editorial/product demonstrations so map, verified stories, QR scanning, and next-place directions each read as a distinct capability.
 - **Use actual content in the device.** The hero phone links to the published St. Anastasia page, map and route pages, and the existing local-storage favorite control.

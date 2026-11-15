@@ -1521,3 +1521,175 @@ a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[
 .visitor-info-grid strong { color:#253652;font-size:.92rem;line-height:1.55; }
 .visitor-official-link { margin-top:24px; }
 @media(max-width:700px) { .visitor-info-grid { grid-template-columns:1fr; }.visitor-info-grid article { min-height:0; } }
+
+/* Eurovision-inspired Black Sea Spectral palette.
+   Original Discover Burgas art direction — not official Eurovision branding. */
+:root {
+  --esc-night:#17072f;
+  --esc-ink:#21123f;
+  --esc-violet:#6336ff;
+  --esc-magenta:#ed2fa6;
+  --esc-cyan:#09bddd;
+  --esc-coral:#ee5f5c;
+  --esc-sun:#ffd45c;
+  --esc-paper:#fdfbff;
+  --esc-mist:#f1edff;
+  --esc-muted:#625b78;
+  --esc-line:rgba(51,29,93,.15);
+  --ink:var(--esc-ink);
+  --sea:var(--esc-night);
+  --turquoise:var(--esc-violet);
+  --ivory:var(--esc-paper);
+  --slate:var(--esc-ink);
+  --gold:var(--esc-sun);
+  --gold-text:var(--esc-night);
+  --mist:var(--esc-mist);
+  --line:var(--esc-line);
+  --atlas-blue:var(--esc-violet);
+  --atlas-navy:var(--esc-night);
+  --atlas-lime:var(--esc-magenta);
+  --atlas-coral:var(--esc-coral);
+  --atlas-paper:var(--esc-paper);
+  color-scheme:light;
+}
+
+body { background:var(--esc-paper);color:var(--esc-ink); }
+::selection { color:#fff;background:var(--esc-magenta); }
+:focus-visible { outline-color:var(--esc-cyan)!important; }
+
+.site-header { filter:drop-shadow(0 15px 30px rgba(31,10,64,.13)); }
+.header-inner {
+  border-color:rgba(255,255,255,.18);
+  background:linear-gradient(105deg,#130626 0%,#271052 58%,#351064 100%);
+  box-shadow:inset 0 1px rgba(255,255,255,.1);
+}
+.header-inner::after { content:"";position:absolute;inset:auto 26px -1px;height:2px;border-radius:99px;background:linear-gradient(90deg,transparent,var(--esc-violet),var(--esc-magenta),var(--esc-cyan),transparent);opacity:.9; }
+.brand-mark { color:#fff;background:linear-gradient(135deg,var(--esc-violet),var(--esc-magenta));box-shadow:0 0 0 4px rgba(255,255,255,.08),0 0 28px rgba(237,47,166,.26); }
+.desktop-nav a:hover,.language:hover { color:#fff;background:rgba(255,255,255,.1); }
+.desktop-nav a:last-child { color:#fff;background:linear-gradient(110deg,var(--esc-violet),var(--esc-magenta));box-shadow:0 7px 22px rgba(237,47,166,.25); }
+.language,.mobile-menu { color:#fff;border-color:rgba(255,255,255,.2); }
+
+.button,.aevo-cta,.demo-primary,.cultural-route-start {
+  color:#fff;
+  border-color:transparent;
+  background:linear-gradient(110deg,var(--esc-violet),var(--esc-magenta));
+  box-shadow:0 11px 28px rgba(99,54,255,.2);
+}
+.button.secondary,.aevo-quiet-link { color:var(--esc-ink);background:#fff;border-color:var(--esc-line);box-shadow:none; }
+.button:hover,.aevo-cta:hover,.demo-primary:hover,.cultural-route-start:hover { color:#fff;background:linear-gradient(110deg,#5428ed,#d91d92);box-shadow:0 14px 34px rgba(99,54,255,.28); }
+
+.aevo-hero { background:linear-gradient(180deg,#fff 0%,#f9f5ff 67%,#fff 100%); }
+.aevo-hero::before { background:radial-gradient(circle at 50% 18%,rgba(255,255,255,.96),transparent 42%); }
+.aevo-glow { background:radial-gradient(ellipse at center,rgba(255,82,188,.94) 0%,rgba(99,54,255,.8) 31%,rgba(9,189,221,.66) 54%,rgba(239,228,255,.84) 70%,transparent 76%); }
+.aevo-grid-echo { color:rgba(99,54,255,.13); }
+.host-dot { background:var(--esc-magenta);box-shadow:0 0 0 5px rgba(237,47,166,.12),0 0 18px rgba(237,47,166,.38); }
+.aevo-overline,.aevo-phone-greeting span,.place-area,.path-grid>a>span { color:#6b28d9; }
+.aevo-phone { border-color:#3c2467;background:#130a27;box-shadow:0 28px 65px rgba(31,9,68,.3),0 0 0 7px rgba(99,54,255,.08); }
+.aevo-app-mark,.place-number,.phone-link,.editorial-stops>a>span { color:#fff;background:linear-gradient(135deg,var(--esc-violet),var(--esc-magenta)); }
+.aevo-phone-quick>a { color:#fff;background:linear-gradient(110deg,var(--esc-violet),var(--esc-magenta)); }
+.aevo-phone-nav>a[aria-current="page"],.aevo-phone-nav>a:hover { color:var(--esc-magenta); }
+.aevo-float-note { border-color:rgba(99,54,255,.16);box-shadow:0 16px 45px rgba(51,29,93,.13); }
+.aevo-note-icon { color:#fff;background:var(--esc-violet); }
+
+.aevo-statement,.choose-path,.rebuild-map-section,.phone-guide-section,.editorial-route,.history-teaser { background:var(--esc-paper); }
+.aevo-proof-row>article,.path-grid>a,.place-card,.leisure-tile,.route-timeline-card,.route-map-card,.visitor-info-grid article { border-color:var(--esc-line);background:#fff;box-shadow:0 14px 45px rgba(44,20,83,.06); }
+.path-grid>a:hover,.place-card:hover,.leisure-tile:hover { border-color:rgba(99,54,255,.5);box-shadow:0 18px 45px rgba(99,54,255,.12); }
+.phone-stage,.rebuild-live-map { background:linear-gradient(145deg,#1a0837,#351269 55%,#152859); }
+.journey-orbit { border-color:rgba(13,205,226,.38);box-shadow:0 0 0 34px rgba(237,47,166,.06); }
+.scan-line { background:linear-gradient(90deg,transparent,var(--esc-cyan),transparent);box-shadow:0 0 16px rgba(9,189,221,.65); }
+.mini-pin,.route-badge { color:#fff;background:var(--esc-magenta); }
+.phone-guide-steps button.active,.inspired-home .phone-guide-section .phone-guide-steps button.active { color:#fff;border-color:var(--esc-violet);background:var(--esc-night);box-shadow:0 0 0 3px rgba(99,54,255,.15); }
+.phone-guide-steps button>span,.phone-guide-steps button.active>span,.inspired-home .phone-guide-section .phone-guide-steps button.active>span,.inspired-home .phone-guide-section .phone-guide-steps button.active>svg { color:var(--esc-cyan); }
+
+.stay-banner { color:#fff;background:linear-gradient(118deg,#4d22d7 0%,#9225c8 54%,#e8329d 100%); }
+.stay-banner .eyebrow { color:#f8d8ff; }
+.stay-banner .button { color:var(--esc-night);background:var(--esc-sun); }
+.stay-art { color:var(--esc-cyan);background:linear-gradient(145deg,#120525,#27104c); }
+.final-blue,.demo-opening,.cultural-route-hero { color:#fff;background:linear-gradient(135deg,#17072f 0%,#321066 52%,#171c4d 100%); }
+.final-blue .button.secondary { color:var(--esc-night);background:var(--esc-sun);border-color:var(--esc-sun); }
+.final-blue>svg,.cultural-route-topline svg,.cultural-route-hero-footer svg { color:var(--esc-cyan); }
+
+.atlas-map-intro,.atlas-map-footer { color:#fff;background:linear-gradient(135deg,#17072f,#321066 58%,#142550); }
+.atlas-map-title-row h1,.atlas-map-kicker,.atlas-scroll,.atlas-map-section-head .atlas-map-kicker { color:#fff; }
+.atlas-map-description p,.atlas-map-topline,.atlas-map-footer { color:#ddd2f4; }
+.atlas-map-page .filter-row button.active,.discovery-scope button.active,.clear-filters { color:#fff;border-color:var(--esc-violet);background:var(--esc-violet); }
+.atlas-map-page .filter-row button:hover { border-color:var(--esc-magenta); }
+.map-result.active { border-left-color:var(--esc-magenta);background:#f7f1ff; }
+.search-box:focus-within { border-color:var(--esc-violet);box-shadow:0 8px 26px rgba(99,54,255,.14); }
+.route-map-legend i { background:var(--esc-magenta);box-shadow:0 0 0 3px rgba(237,47,166,.15); }
+
+.demo-opening::before { background:radial-gradient(circle,rgba(237,47,166,.22),transparent 62%); }
+.demo-orbit { border-color:rgba(9,189,221,.38); }
+.demo-orbit-two { border-color:rgba(237,47,166,.28); }
+.demo-art-center { color:#fff;background:linear-gradient(145deg,var(--esc-violet),var(--esc-magenta));box-shadow:0 20px 55px rgba(237,47,166,.25); }
+.demo-flow-meta>span,.demo-scan-copy h2 em { color:#a82378; }
+.demo-next-section>span { color:#fff;background:var(--esc-violet); }
+.demo-real-sign { border-color:var(--esc-line);box-shadow:0 22px 60px rgba(38,14,76,.12); }
+
+.cultural-route-page,.cultural-route-body { color:var(--esc-ink);background:#faf8ff; }
+.cultural-route-art::before,.cultural-route-art::after { border-color:rgba(9,189,221,.3); }
+.cultural-route-art>svg { color:var(--esc-cyan);filter:drop-shadow(0 8px 25px rgba(9,189,221,.18)); }
+.cultural-route-art>svg circle { fill:var(--esc-magenta);stroke:var(--esc-night); }
+.route-content-head h2,.route-timeline-card h3,.route-map-card-head strong { color:#2d1750; }
+.route-timeline::before { background:linear-gradient(var(--esc-violet),var(--esc-magenta),var(--esc-cyan)); }
+.route-timeline-index>span { color:#5425ba;border-color:#ded2f4;background:#f0eaff; }
+.route-timeline-index>i { border-color:#faf8ff;background:var(--esc-magenta);box-shadow:0 0 0 1px var(--esc-magenta); }
+.route-timeline-card h3 a:hover,.route-story-link,.route-map-tip a { color:#6a2bd0; }
+.route-travel-note,.route-map-tip { border-color:var(--esc-magenta);background:#f1ecff; }
+
+.history-hero,.history-platform { background:linear-gradient(135deg,#17072f,#351069 64%,#15224d); }
+.history-hero-copy h1 em,.history-platform-flow article:nth-child(3)>span,.history-source-list a>span,.history-source-links a>span { color:#b82380; }
+.history-period-nav a i { color:#6028c7;background:#eee6ff; }
+.history-chapter:nth-child(even) { background:#f7f2ff; }
+
+.place-page .button,.place-content .button,.navigation-providers a:first-child { color:#fff;border-color:var(--esc-violet);background:linear-gradient(110deg,var(--esc-violet),var(--esc-magenta)); }
+.location-copy .eyebrow,.location-copy .eyebrow[style],.source-list a,.source-list a strong,.source-list a small,.nearby-card span strong,.nearby-card span small { color:#6626bd!important; }
+.visitor-info-section { background:#f3efff; }
+.visitor-info-grid span { color:#6829d0; }
+.route-state { color:var(--esc-ink); }
+.route-state-mark { color:#fff;background:linear-gradient(135deg,var(--esc-violet),var(--esc-magenta)); }
+.route-state-lines i::after { background:linear-gradient(90deg,transparent,rgba(99,54,255,.45),transparent); }
+
+@keyframes marker-pulse { 0%,100%{filter:drop-shadow(0 0 0 transparent)}50%{filter:drop-shadow(0 0 9px rgba(237,47,166,.72))} }
+@media(max-width:700px) {
+  .header-inner::after { inset-inline:18px; }
+  .aevo-glow { opacity:.78; }
+  .stay-banner { background:linear-gradient(145deg,#4b21d3,#c728ad 72%,#ed4f86); }
+}
+
+/* Small inherited accents and directory pages use the same spectrum. */
+.aevo-proof-row i { color:#fff;background:linear-gradient(135deg,var(--esc-violet),var(--esc-magenta)); }
+.aevo-hero-meta>a:hover { border-color:rgba(99,54,255,.45);background:#f7f2ff; }
+.aevo-quiet-link:hover,.text-link:hover,.footer a:hover { color:#6b28d9; }
+.mini-brand,.mini-brand svg,.aevo-phone-nav>a.selected svg,.phone-story p { color:#7629d3; }
+.aevo-phone-quick .favorite.is-saved,.favorite.is-saved { color:#a72179;border-color:#edb9dd;background:#fff0fa; }
+.fact-pill { color:#451878;background:#efe5ff; }
+.route-badge { color:#fff;background:linear-gradient(135deg,var(--esc-violet),var(--esc-magenta)); }
+.phone-route button:first-of-type,.phone-route a:first-of-type { color:#fff;background:var(--esc-night); }
+
+.page-hero { color:#fff;background:linear-gradient(135deg,#17072f,#351069 64%,#15224d); }
+.page-hero h1,.page-hero p { color:#fff; }
+.travel-page { background:var(--esc-paper); }
+.travel-page h1,.venue-body h2,.provider-card h2 { color:#2c174c; }
+.filter-row button.active,.view-toggle button.active { color:#fff;border-color:var(--esc-violet);background:var(--esc-violet); }
+.venue-card,.provider-card { border-color:var(--esc-line);box-shadow:0 15px 45px rgba(44,20,83,.06); }
+.venue-art { color:#682bd0;background:#f0eaff; }
+.venue-art.neptun { color:#087f9a;background:#e6f9fc; }
+.provider-card>svg,.travel-note>svg { color:var(--esc-violet); }
+.travel-note { background:#f1edff; }
+.footer { background:#f5f1fb;border-color:var(--esc-line); }
+.footer-brand,.footer .eyebrow { color:#2d1750; }
+.footer,.footer a { color:#33204f; }
+.footer p,.footer-grid p,.footer-bottom,.footer-bottom span { color:#675f78; }
+
+.demo-experience { color:var(--esc-ink);background:#fcfbff; }
+.demo-section-heading h2,.demo-flow-card h3,.demo-scan-copy h2,.demo-sign-brand,.demo-sign-copy h3,.demo-next-section h2 { color:#2d1750; }
+.demo-section-heading h2 em,.demo-scan-copy h2 em { color:#b4217e; }
+.demo-flow-grid,.demo-flow-card { border-color:#e4dcf2; }
+.demo-flow-meta svg { color:var(--esc-violet); }
+.demo-flow-arrow { color:var(--esc-magenta);border-color:#ddd3ee;background:#fcfbff; }
+.demo-scan-section { background:#f0ebff; }
+.demo-scan-copy .demo-primary { color:#fff;background:linear-gradient(110deg,var(--esc-violet),var(--esc-magenta)); }
+.demo-scan-copy .demo-primary:hover { background:linear-gradient(110deg,#5428ed,#d91d92); }
+.demo-sign-mark { color:#fff;background:linear-gradient(135deg,var(--esc-violet),var(--esc-magenta)); }
+.demo-sign-foot>a { color:#6b28d9; }
