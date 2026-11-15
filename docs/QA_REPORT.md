@@ -17,11 +17,18 @@ This pass introduced versioned public API contracts, server-side discovery pagin
 | QR decode regression | PASS | Unit test generated and decoded the stable landmark URL |
 | Database seed generation | PASS | `npm run supabase:seed:sql` regenerated `supabase/seed.sql` from the validated manifest |
 | Local Supabase migration/pgTAP execution | NOT RUN | Docker is not installed on this machine; `.github/workflows/quality.yml` runs the database job where Docker is available |
-| Remote Supabase migration push | NOT RUN | Intentionally not applied without an explicit production database change/deployment step |
+| Remote Supabase migration | PASS | Applied `backend_contracts_and_search` to project `discover-burgas`; migration history records version `20261115125012` |
+| Production seed | PASS | Remote database contains 14 published landmarks and 3 published routes |
+| Production data integrity | PASS | 0 missing locales, 0 invalid coordinate pairs, 0 published records without sources, and 0 broken route stops |
+| Production API smoke test | PASS | Supabase-mode health, places, full-text search, nearby, and routes returned HTTP 200 |
+| Production report idempotency | PASS | First request returned 201, exact replay returned 200 with the same record ID, and conflicting reuse returned 422; the temporary record was removed |
+| Supabase advisors | PASS | Security and health advisors returned zero findings after migration and seed |
+| Secret rotation | PASS | The previously exposed `default` server key was deleted after validating the separate `version02` key |
+| GitHub branch publication | PASS | `feature/backend-production-core` pushed to `rosen-jlsa/discover-burgas` |
 
 The browser suite covers 375, 390, 768, 1024 and 1440 px projects. Desktop-only proofs include full-page accessibility, service-worker cache boundaries, report rate limiting, exact idempotent replay, and conflicting idempotency-key rejection.
 
-The remaining production gates are external: rotate the previously exposed Supabase secret, apply the new migration to the selected Supabase project, execute `npm run backend:verify`, configure the production environment, deploy to HTTPS, and perform a physical smartphone QR scan.
+The remaining production gates are Vercel environment configuration/deployment, final HTTPS QR regeneration, and a physical smartphone QR scan. Local pgTAP execution still requires Docker, while the committed GitHub Actions database job provides the repeatable compatible-environment check.
 
 ## Regional landmark expansion — 14 November 2026
 
