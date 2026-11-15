@@ -1,20 +1,7 @@
 import type { NextConfig } from "next";
+import { buildContentSecurityPolicy } from "./src/lib/security-policy";
 
-const contentSecurityPolicy = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "frame-ancestors 'none'",
-  "object-src 'none'",
-  "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://tile.openstreetmap.org https://*.googleusercontent.com",
-  "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co https://places.googleapis.com",
-  "manifest-src 'self'",
-  "worker-src 'self'",
-  "upgrade-insecure-requests",
-].join("; ");
+const contentSecurityPolicy = buildContentSecurityPolicy();
 
 const nextConfig: NextConfig = {
   images: { formats: ["image/avif", "image/webp"] },
