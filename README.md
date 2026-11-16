@@ -143,5 +143,6 @@ This repository is an independent cultural-technology prototype and is not affil
 - [3–5 minute jury demo](docs/DEMO_GUIDE.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Executed QA](docs/QA_REPORT.md)
+- [Final implementation report](docs/FINAL_IMPLEMENTATION_REPORT.md)
 - [Rendered screenshots](screenshots/)
 

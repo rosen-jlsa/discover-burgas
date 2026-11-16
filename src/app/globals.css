@@ -1612,6 +1612,7 @@ body { background:var(--esc-paper);color:var(--esc-ink); }
 .atlas-map-intro,.atlas-map-footer { color:#fff;background:linear-gradient(135deg,#17072f,#321066 58%,#142550); }
 .atlas-map-title-row h1,.atlas-map-kicker,.atlas-scroll,.atlas-map-section-head .atlas-map-kicker { color:#fff; }
 .atlas-map-description p,.atlas-map-topline,.atlas-map-footer { color:#ddd2f4; }
+.atlas-map-section-head .atlas-map-kicker { color:#6125b8; }
 .atlas-map-page .filter-row button.active,.discovery-scope button.active,.clear-filters { color:#fff;border-color:var(--esc-violet);background:var(--esc-violet); }
 .atlas-map-page .filter-row button:hover { border-color:var(--esc-magenta); }
 .map-result.active { border-left-color:var(--esc-magenta);background:#f7f1ff; }

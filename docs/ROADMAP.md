@@ -3,7 +3,7 @@
 ## Completed MVP
 
 - Original bilingual identity and responsive editorial UI
-- White and cobalt page system, linked phone journey, searchable dining collection and external accommodation search links
+- Bright violet–magenta–cyan stage system, linked phone journey, searchable dining collection and external accommodation search links
 - Fourteen sourced location records, including six carefully modelled regional additions, and three transport-honest routes
 - Stable QR redirect, downloadable SVG/PNG codes, and printable proposal
 - Localized stories, source disclosure, licensed-image attribution, maps, nearby discovery, directions, and local favorites

@@ -1,5 +1,25 @@
 # QA report
 
+## Final palette, CSP and accessibility hardening — 16 November 2026
+
+Replaced the former green accent system with the original Discover Burgas violet–magenta–cyan stage palette across public pages, maps, route/demo experiences, PWA metadata and application icons. QR output remains high-contrast black and white. Fixed the development-only React `eval()` console error by generating environment-aware CSP: local development permits the React diagnostic capability, while production continues to reject `unsafe-eval`.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Lint | PASS | `npm run lint` completed without errors |
+| Type checking | PASS | `npm run typecheck` completed without errors |
+| Unit tests | PASS | 8 files and 16 tests, including development/production CSP regression coverage |
+| Production build | PASS | 57 pages/routes generated successfully |
+| Production dependency audit | PASS | `npm audit --omit=dev` reported 0 vulnerabilities |
+| Development CSP | PASS | Local response includes `unsafe-eval`, allowing React development diagnostics |
+| Production CSP | PASS | Production response excludes `unsafe-eval` and retains frame/object restrictions |
+| Browser suite audit | FOUND AND FIXED | The first run produced 80 passes, 24 intentional skips and one serious map-kicker contrast finding |
+| Focused accessibility regression | PASS | The affected desktop key-public-pages axe test passed after the color correction |
+| Clean production rebuild | PASS | 57 pages/routes generated with the contrast correction included |
+| Final full browser suite | PASS | 81 tests passed, 24 intentional cross-project skips, 0 failures across five viewports |
+
+The final code still requires an approved production deployment before the new palette and CSP change replace the currently deployed build. Physical phone scanning, owner-level Vercel secret classification, legal review and manual assistive-technology testing remain external release checks.
+
 ## HTTPS production deployment — 15 November 2026
 
 The verified `feature/backend-production-core` commit `2ad478a` was deployed to Vercel and is serving the final project domain at [https://discover-burgas.vercel.app](https://discover-burgas.vercel.app). Production is connected to the seeded Supabase project; no paid service or Google Places key was enabled.
