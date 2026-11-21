@@ -1,9 +1,11 @@
 {
   "name": "discover-burgas",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "android:signing":"node scripts/android-signing.mjs",
+    "android:build":"node scripts/build-android.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -11,7 +13,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "bench:codspeed": "codspeed run -m simulation -- npx vitest bench --run",
-    "test:e2e": "playwright test tests/app.spec.ts",
+    "test:e2e": "playwright test tests/app.spec.ts tests/pwa.spec.ts",
     "screenshots": "playwright test tests/screenshots.spec.ts --project=desktop",
     "screenshots:design": "node scripts/capture-design-previews.mjs",
     "supabase:link": "supabase link",

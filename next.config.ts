@@ -4,6 +4,7 @@ import { buildContentSecurityPolicy } from "./src/lib/security-policy";
 const contentSecurityPolicy = buildContentSecurityPolicy();
 
 const nextConfig: NextConfig = {
+  env:{NEXT_PUBLIC_APP_BUILD_ID:process.env.VERCEL_GIT_COMMIT_SHA||process.env.APP_BUILD_ID||"local-1.1.0",NEXT_PUBLIC_APP_BUILT_AT:process.env.APP_BUILT_AT||new Date().toISOString()},
   images: { formats: ["image/avif", "image/webp"] },
   async headers() {
     return [{

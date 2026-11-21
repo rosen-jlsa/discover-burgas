@@ -1,0 +1,43 @@
+name: Android packages
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  signed-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Check release signing configuration
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          test -n "$ANDROID_KEYSTORE_BASE64" || { echo "Configure Android signing secrets before building a release."; exit 1; }
+          test -n "$ANDROID_KEYSTORE_PASSWORD" || exit 1
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/discover-burgas.keystore"
+          chmod 600 "$RUNNER_TEMP/discover-burgas.keystore"
+      - name: Build APK and AAB
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ runner.temp }}/discover-burgas.keystore
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_KEY_ALIAS: discover-burgas
+        run: |
+          sdkmanager "platforms;android-36" "build-tools;35.0.0"
+          chmod +x platforms/android/project/gradlew
+          node scripts/build-android.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: discover-burgas-android
+          path: artifacts/android/
+          if-no-files-found: error
+          retention-days: 14

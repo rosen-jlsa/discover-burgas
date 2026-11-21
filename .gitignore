@@ -11,3 +11,9 @@ artifacts/
 screenshots/.tmp/
 *.log
 *.tsbuildinfo
+**/.gradle/
+platforms/android/project/**/build/
+platforms/android/project/local.properties
+*.keystore
+*.jks
+**/signing.local.json

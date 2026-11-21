@@ -53,6 +53,8 @@ The [production capture set](screenshots/production/) was rendered directly from
 
 ## Stack
 
+Installation and Android packaging: [PWA and Android guide](docs/PWA_AND_ANDROID.md). Includes localized install guidance, explicit offline story downloads, controlled updates, and an Android signing/build project. Device validation and signed Android binaries are separate release checks; see the guide for outstanding requirements.
+
 Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Leaflet, Supabase PostgreSQL, Zod, Vitest, Playwright, axe-core, and a Python REST verifier. The application is deployed on Vercel with Supabase as the production backend.
 
 The public pages and APIs read live published records from Supabase when `CONTENT_BACKEND=supabase`. The version-controlled, Zod-validated manifest in `src/data/landmarks.ts` remains the auditable seed and an explicit local fallback only.

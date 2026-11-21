@@ -230,3 +230,14 @@ Visual review confirmed the mobile demo presents the actual QR, the direct Aquae
 | Rendered route previews | PASS | Playwright captured `route.png`, `route-full.png`, and `route-390.png` from the production server |
 | Mobile visual review | PASS | Confirmed five ordered stops, per-stop story links and Google Maps/Apple Maps/Waze actions, route map with five markers, and responsive layout in `route-390.png` |
 | Local route response | PASS | `/bg/routes/burgas-centre-stories` returned HTTP 200 on port 3001 |
+# PWA / Android work — 2026-11-21
+
+- Production build: executed successfully, 62 generated pages, Next.js 16.4.6.
+- TypeScript check: executed successfully.
+- Unit tests: 16 passed across 8 files.
+- Lint: executed successfully after fixing a test variable declaration.
+- Final full browser suite at five widths: 106 passed, 24 intentionally skipped (42.5 seconds). An earlier run found an ambiguous favorite-button test locator; corrected it to exact accessible names before the successful full rerun.
+- All 25 new PWA checks across five widths passed in that suite: instructions/version/asset links, user-triggered installation, offline text/photo reload and deletion, blocked storage, waiting-worker activation preserving local data. These are Chromium viewport checks, not physical iOS or Android validation.
+- Signing identity created with JDK 17; only its public certificate is in Git. Private signing material stays outside the repository.
+- Android build attempted and stopped at the explicit missing SDK/environment prerequisite. APK/AAB generation and Android lint are NOT passed or complete. SDK license acceptance is pending owner confirmation.
+- Public deployment, real-device installation, Safari installation and Android domain verification remain outstanding. No store upload was performed.

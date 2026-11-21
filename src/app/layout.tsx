@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description: "Интерактивна платформа за културното наследство на Бургас.",
   manifest: "/manifest.webmanifest",
   applicationName: "Открий Бургас",
+  appleWebApp:{capable:true,title:"Discover Burgas",statusBarStyle:"default"},
   authors: [{ name: "Discover Burgas" }],
   category: "travel",
   openGraph: {

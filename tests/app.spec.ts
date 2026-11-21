@@ -28,9 +28,9 @@ test("stable QR route redirects and English switch works", async ({ page }) => {
 
 test("favorites persist without an account", async ({ page }) => {
   await page.goto("/bg/places/aquae-calidae");
-  await page.getByRole("button", { name: "Запази" }).click();
+  await page.getByRole("button", { name: "Запази", exact: true }).click();
   await page.reload();
-  await expect(page.getByRole("button", { name: "Запазено" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Запазено", exact: true })).toBeVisible();
 });
 
 test("map keeps a useful fallback when geolocation is denied", async ({ page, context }) => {

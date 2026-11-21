@@ -1697,6 +1697,30 @@ body { background:var(--esc-paper);color:var(--esc-ink); }
 
 /* Scroll-driven guide: one native scroll, four product moments. */
 .photo-context { margin-block:-50px 60px;color:#625b78;font-size:.85rem; }
+.install-page { padding-block:70px;max-width:1050px; }
+.install-page h1 { font-size:clamp(2.8rem,7vw,5.2rem);line-height:1;letter-spacing:-.06em;max-width:800px; }
+.install-page>p,.offline-library>p { max-width:740px; }
+.install-grid { display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:35px 0; }
+.install-grid article,.install-action-card,.offline-story { padding:24px;border:1px solid var(--esc-line);border-radius:18px;background:#fff; }
+.install-grid h2 { margin-top:0; }
+.install-actions { display:flex;align-items:center;gap:18px;flex-wrap:wrap; }
+.offline-library { margin-top:45px; }
+.offline-story { margin-block:14px; }
+.offline { padding-block:48px; }
+.offline h1 { font-size:clamp(2.5rem,7vw,4.5rem);line-height:1.06;letter-spacing:-.05em;margin-block:18px; }
+.offline-library { text-align:left; }
+.offline-library h2 { font-size:1.6rem;font-weight:750;margin-bottom:14px; }
+.offline-story p,.offline-story ul { margin-block:18px;line-height:1.7; }
+.offline-story ul { padding-left:20px;list-style:disc; }
+.offline-story h3 { font-weight:750;margin-top:24px; }
+.offline-story .image-credit { font-size:.75rem;line-height:1.5;overflow-wrap:anywhere; }
+.offline-story summary { cursor:pointer;font-size:1.1rem;font-weight:800; }
+.offline-story-photo { display:block;width:100%;max-height:450px;object-fit:contain;margin-top:20px;border-radius:12px; }
+.offline-save { margin-top:28px; }
+.offline-save p { min-height:24px;font-size:.85rem; }
+.pwa-update { position:fixed;z-index:2000;bottom:18px;left:50%;transform:translateX(-50%);width:min(600px,calc(100% - 28px));padding:20px;background:#fff;border:1px solid #d5c6f0;box-shadow:0 16px 65px #17072f30;border-radius:20px;display:flex;flex-wrap:wrap;gap:12px; }
+.pwa-update p { flex-basis:100%;margin:0;color:#21123f; }
+@media(max-width:650px){.install-grid{grid-template-columns:1fr}.install-page{padding-block:45px}.install-grid article,.install-action-card,.offline-story{padding:19px}}
 .inspired-home .phone-guide-section.scroll-journey { min-height:340svh;padding:0;overflow:visible; }
 .scroll-journey .phone-guide-grid { position:sticky;top:82px;min-height:calc(100svh - 82px);align-items:center;padding-block:22px; }
 .scroll-journey .phone-stage { min-height:620px; }
