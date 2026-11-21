@@ -1,5 +1,11 @@
 # Data and image sources
 
+## Complete photo coverage — 21 November 2026
+
+All fourteen published landmarks now have documentary photography. Nine previously empty records received explicitly selected Wikimedia Commons photographs, with creator, source page, license URL, original dimensions and retrieval date recorded in `src/data/landmark-photos.json`. Reproduction is available through `scripts/import-landmark-photos.mjs`; web versions are optimized WebP files in `public/images/landmarks/`. Original files range from 1755 to 5712 pixels wide; delivered derivatives are 1280 pixels wide. The existing five licensed images remain in use.
+
+Arena Burgas uses an archival July 2021 exterior and is labelled accordingly. The Ropotamo image depicts a boat trip on the river, not the precise departure pier; the page explicitly distinguishes this from its verified map marker. Images have not been generated or stripped of watermarks. The final selected Pomorie tomb image is the exterior from `File:Pomorie Thracian tomb E7.jpg`.
+
 Last regional-expansion research verification: **14 November 2026**. Visitor information is intentionally nullable; the application does not publish hours, prices, or accessibility claims where current authoritative data was not confirmed.
 
 ## Dining and accommodation handoff

@@ -1,4 +1,4 @@
-const CACHE = "discover-burgas-v2";
+const CACHE = "discover-burgas-v3";
 const SHELL = ["/bg", "/en", "/offline", "/icon.svg", "/icon-192.png", "/icon-512.png", "/manifest.webmanifest"];
 const PUBLIC_NAVIGATION = /^\/(bg|en)(\/|$)/;
 const PUBLIC_ASSET = /^(\/_next\/static\/|\/images\/|\/icon(?:-\d+)?\.(?:svg|png)$|\/manifest\.webmanifest$)/;

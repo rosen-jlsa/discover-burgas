@@ -19,12 +19,14 @@ for(const width of [375,390,768,1024,1440]) test(`homepage layout ${width}`,asyn
  await page.screenshot({path:`screenshots/aevo-inspired/home-${width}.png`,fullPage:true});
  expect(errors).toEqual([]);
 });
-test("phone guide has keyboard tabs and working destinations",async({page})=>{
+test("phone guide follows scroll in both directions with working destinations",async({page})=>{
  await page.goto("/bg");
- const first=page.getByRole("tab").first();await first.focus();await page.keyboard.press("End");
- await expect(page.getByRole("tab").last()).toHaveAttribute("aria-selected","true");
+ const journey=page.locator(".scroll-journey");
+ const scroll=async(progress:number)=>{await journey.evaluate((el,p)=>{window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY+(el.getBoundingClientRect().height-window.innerHeight)*p,behavior:"instant"});},progress);};
+ await scroll(.88);
+ await expect(journey).toHaveAttribute("data-active-step","3");
  await expect(page.getByRole("link",{name:"Google Maps",exact:true})).toHaveAttribute("href",/google.com\/maps\/dir/);
- await page.keyboard.press("Home");await expect(first).toHaveAttribute("aria-selected","true");
+ await scroll(.05);await expect(journey).toHaveAttribute("data-active-step","0");
  await expect(page.getByRole("link",{name:"Или отвори тук"})).toHaveAttribute("href","/bg/places/archaeological-museum");
 });
 test("dining category links filter actual sourced places",async({page})=>{

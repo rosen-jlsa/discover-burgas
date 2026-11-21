@@ -1,4 +1,4 @@
-import { test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
 const shots = [
   ["homepage-desktop", "/bg", { width: 1440, height: 1000 }],
@@ -46,14 +46,12 @@ for (const [name, path, viewport] of shots) test(`capture ${name}`, async ({ pag
 test("capture interactive phone guide", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1200 });
   await page.goto("/bg");
-  const mapStep = page.getByRole("tab", { name: /Виж какво е наблизо/ });
-  await mapStep.evaluate((element: HTMLElement) => element.click());
-  await page.waitForFunction(() => document.querySelector('[role="tab"][aria-selected="true"]')?.textContent?.includes("Виж какво е наблизо"));
   await page.evaluate(() => {
     const section = document.querySelector<HTMLElement>(".phone-guide-section");
     document.documentElement.style.scrollBehavior = "auto";
-    section?.scrollIntoView({ block: "start" });
+    if(section)window.scrollTo(0,section.getBoundingClientRect().top+window.scrollY+(section.offsetHeight-window.innerHeight)*.6);
   });
+  await expect(page.locator(".scroll-journey")).toHaveAttribute("data-active-step","2");
   await page.waitForTimeout(450);
   await page.screenshot({ path: "screenshots/phone-guide.png" });
 });

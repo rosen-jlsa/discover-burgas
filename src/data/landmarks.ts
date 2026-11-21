@@ -1,4 +1,5 @@
 import { landmarkSchema, routeSchema, type Landmark, type CulturalRoute } from "@/types/content";
+import licensedPhotos from "./landmark-photos.json";
 
 const verifiedAt = "2026-10-22";
 const regionalVerifiedAt = "2026-11-14";
@@ -198,7 +199,10 @@ const raw: Landmark[] = [
   }
 ];
 
-export const landmarks = raw.map((item) => landmarkSchema.parse(item));
+export const landmarks = raw.map((item) => {
+  const photo=licensedPhotos[item.slug as keyof typeof licensedPhotos];
+  return landmarkSchema.parse({...item,images:photo?[photo]:item.images});
+});
 
 export const routes: CulturalRoute[] = [routeSchema.parse({
   id: "route-central", slug: "burgas-centre-stories", transportMode: "WALKING",

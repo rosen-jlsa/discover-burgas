@@ -141,9 +141,12 @@ test("admin health dashboard stays locked without its token", async ({ page }) =
 
 test("interactive phone guide explains the four-step journey", async ({ page }) => {
   await page.goto("/bg");
-  await page.getByRole("tab", { name: /Виж какво е наблизо/ }).click();
+  await page.waitForLoadState("networkidle");
+  const journey=page.locator(".scroll-journey");
+  const scrollToStep=async (progress:number)=>{await journey.evaluate((element,progress)=>{const top=element.getBoundingClientRect().top+window.scrollY;window.scrollTo({top:top+(element.getBoundingClientRect().height-window.innerHeight)*progress,behavior:"instant"});},progress);};
+  await expect.poll(async()=>{await scrollToStep(.6);return journey.getAttribute("data-active-step");}).toBe("2");
   await expect(page.getByRole("heading", { name: "Наблизо до теб" })).toBeVisible();
-  await page.getByRole("tab", { name: /любимата карта/ }).click();
+  await scrollToStep(.88);
   await expect(page.getByRole("link", { name: /Google Maps/ })).toHaveAttribute("href", /google.com\/maps\/dir/);
 });
 
@@ -182,7 +185,7 @@ test("report endpoint rejects bots and rate-limits repeated submissions", async 
   test.skip(testInfo.project.name !== "desktop", "One server-side rate-limit proof is sufficient.");
   const bot = await request.post("/api/reports", { headers: { "Idempotency-Key": crypto.randomUUID() }, data: { category: "other", page: "/bg", message: "Automated invalid submission", website: "spam.example" } });
   expect(bot.status()).toBe(400);
-  const headers = { "x-vercel-forwarded-for": `198.51.100.${20 + Math.floor(Date.now() / 1000) % 180}` };
+  const headers = { "x-vercel-forwarded-for": `198.18.${Math.floor(Math.random()*256)}.${Math.floor(Math.random()*254)+1}` };
   for (let index = 0; index < 5; index += 1) {
     const accepted = await request.post("/api/reports", { headers: { ...headers, "Idempotency-Key": crypto.randomUUID() }, data: { category: "other", page: "/bg", message: `Rate limit verification report ${index}` } });
     expect(accepted.status()).toBe(201);
