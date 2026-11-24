@@ -1707,6 +1707,7 @@ body { background:var(--esc-paper);color:var(--esc-ink); }
 .offline-library { margin-top:45px; }
 .offline-story { margin-block:14px; }
 .discovery-collection { padding-block:80px; }
+.scroll-journey { overflow-x:clip; }
 .collection-heading { display:flex;justify-content:space-between;align-items:start;gap:40px;margin-bottom:36px; }
 .collection-heading>p { color:#6530c4;font-weight:650;padding-top:9px; }
 .collection-heading h2 { max-width:650px;font-size:clamp(2.5rem,4.5vw,4.4rem);line-height:1.06;letter-spacing:-.055em;color:#24123e; }
