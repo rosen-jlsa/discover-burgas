@@ -5,6 +5,10 @@ import { appBaseUrl } from "@/lib/qr";
 
 export const metadata: Metadata = {
   metadataBase: new URL(appBaseUrl()),
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : {},
+  },
   title: { default: "Открий Бургас", template: "%s · Открий Бургас" },
   description: "Интерактивна платформа за културното наследство на Бургас.",
   manifest: "/manifest.webmanifest",

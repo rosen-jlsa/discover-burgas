@@ -1706,6 +1706,7 @@ body { background:var(--esc-paper);color:var(--esc-ink); }
 .install-actions { display:flex;align-items:center;gap:18px;flex-wrap:wrap; }
 .offline-library { margin-top:45px; }
 .offline-story { margin-block:14px; }
+.analytics-preference { padding:24px max(20px,calc((100vw - 1200px)/2));display:flex;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--esc-line);background:#fff; }
 .offline { padding-block:48px; }
 .offline h1 { font-size:clamp(2.5rem,7vw,4.5rem);line-height:1.06;letter-spacing:-.05em;margin-block:18px; }
 .offline-library { text-align:left; }

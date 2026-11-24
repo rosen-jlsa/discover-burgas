@@ -230,6 +230,15 @@ Visual review confirmed the mobile demo presents the actual QR, the direct Aquae
 | Rendered route previews | PASS | Playwright captured `route.png`, `route-full.png`, and `route-390.png` from the production server |
 | Mobile visual review | PASS | Confirmed five ordered stops, per-stop story links and Google Maps/Apple Maps/Waze actions, route map with five markers, and responsive layout in `route-390.png` |
 | Local route response | PASS | `/bg/routes/burgas-centre-stories` returned HTTP 200 on port 3001 |
+# Search and launch readiness — 2026-11-24
+
+- Production build and ESLint passed. Build also executed the TypeScript checks; separate typecheck and 16 unit tests passed earlier in this increment.
+- Final browser regression run: 111 passed, 29 skipped across five widths (45.4 seconds). Five added skips are the configured-analytics check when GA is intentionally absent; existing 24 viewport-specific skips remain.
+- Dedicated build with a fake GA ID: both SEO/browser tests passed, including zero tag requests before opt-in, a mocked tag after opt-in, sanitized pageview queue and withdrawal/cookie removal. No request was sent to a real Analytics property. Rebuilt without the fake ID afterward.
+- Local `npm run seo:check` passed for robots, bilingual sitemap and six representative localized pages.
+- Live production SEO check was executed and failed the new sitemap language-alternate requirement: the current public deployment still serves the older sitemap. Local changes have not been deployed.
+- Google/Bing ownership, sitemap submissions, actual GA collection, PageSpeed reports, physical-phone checks and directory submissions are NOT claimed complete. See SEARCH_AND_LAUNCH.md.
+
 # PWA / Android work — 2026-11-21
 
 - Production build: executed successfully, 62 generated pages, Next.js 16.4.6.

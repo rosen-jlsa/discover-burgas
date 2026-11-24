@@ -3,7 +3,7 @@ import {isLocale} from "@/types/content";
 import {InstallApp} from "@/components/InstallApp";
 import {OfflineStories} from "@/components/OfflineStories";
 export function generateStaticParams(){return [{locale:"bg"},{locale:"en"}];}
-export async function generateMetadata({params}:{params:Promise<{locale:string}>}){const {locale}=await params;return {title:locale==="bg"?"Инсталиране и офлайн истории":"Install and offline stories"};}
+export async function generateMetadata({params}:{params:Promise<{locale:string}>}){const {locale}=await params;if(!isLocale(locale))return {};return {title:locale==="bg"?"Инсталиране и офлайн истории":"Install and offline stories",description:locale==="bg"?"Инсталирай Открий Бургас на телефона или компютъра си и запази културни истории за четене без интернет.":"Install Discover Burgas on your phone or computer and save cultural stories to read offline.",alternates:{canonical:`/${locale}/install`,languages:{"bg-BG":"/bg/install",en:"/en/install"}}};}
 export default async function InstallPage({params}:{params:Promise<{locale:string}>}){
  const {locale}=await params;if(!isLocale(locale))notFound();const bg=locale==="bg";
  const instructions=bg?[
