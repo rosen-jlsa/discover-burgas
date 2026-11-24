@@ -7,6 +7,7 @@ import { PlaceCard } from "@/components/PlaceCard";
 import { MapExplorer } from "@/components/MapExplorer";
 import { PhoneJourney } from "@/components/PhoneJourney";
 import { GuideHero } from "@/components/GuideHero";
+import { DiscoveryCollection } from "@/components/DiscoveryCollection";
 import { loadPublishedLandmarks, loadRoutes } from "@/lib/backend";
 import { isLocale } from "@/types/content";
 
@@ -29,6 +30,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const central = places.filter(p => route?.stops.some(s => s.landmarkSlug === p.slug));
   return <div className="editorial-home rebuild-home inspired-home">
     <GuideHero locale={locale}/>
+    <DiscoveryCollection routes={routes} places={places} locale={locale}/>
     <section id="discover-next" className="shell aevo-statement"><div className="aevo-statement-head"><p className="aevo-overline">{bg ? "ГРАДЪТ Е ПО-БЛИЗО, ОТКОЛКОТО МИСЛИШ" : "THE CITY IS CLOSER THAN YOU THINK"}</p><h2>{bg ? "Не просто виждаш мястото. Разбираш защо е важно." : "You don't just see the place. You understand why it matters."}</h2></div><div className="aevo-statement-detail"><p>{bg ? "Един QR знак отваря проверена история, карта и следваща спирка. Без приложение, без регистрация — само Бургас, разказан място по място." : "One QR sign opens a verified story, map and your next stop. No app, no account — just Burgas, told one place at a time."}</p><div className="aevo-proof-row"><span><i>01</i>{bg ? "Сканирай на място" : "Scan on location"}</span><span><i>02</i>{bg ? "Открий историята" : "Discover the story"}</span><span><i>03</i>{bg ? "Тръгни към следващото" : "Head to the next place"}</span></div></div></section>
     <section id="explore" className="shell choose-path"><p className="eyebrow">{bg ? "КАКВО ТИ СЕ ПРАВИ?" : "WHAT ARE YOU IN THE MOOD FOR?"}</p><div className="path-grid"><Link href={`/${locale}/map`}><span>01</span><strong>{bg ? "Да откривам" : "Explore"}</strong><small>{bg ? "История и култура" : "History & culture"}<ArrowUpRight/></small></Link><Link href={`/${locale}/eat?category=nightlife`}><span>02</span><strong>{bg ? "Да изляза" : "Go out"}</strong><small>{bg ? "Вечеря и нощен живот" : "Dining & nightlife"}<ArrowUpRight/></small></Link><Link href={`/${locale}/stay`}><span>03</span><strong>{bg ? "Да остана" : "Stay longer"}</strong><small>{bg ? "Места за нощувка" : "Places to stay"}<ArrowUpRight/></small></Link></div></section>
     <PhoneJourney locale={locale}/>

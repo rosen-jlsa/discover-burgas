@@ -1706,6 +1706,34 @@ body { background:var(--esc-paper);color:var(--esc-ink); }
 .install-actions { display:flex;align-items:center;gap:18px;flex-wrap:wrap; }
 .offline-library { margin-top:45px; }
 .offline-story { margin-block:14px; }
+.discovery-collection { padding-block:80px; }
+.collection-heading { display:flex;justify-content:space-between;align-items:start;gap:40px;margin-bottom:36px; }
+.collection-heading>p { color:#6530c4;font-weight:650;padding-top:9px; }
+.collection-heading h2 { max-width:650px;font-size:clamp(2.5rem,4.5vw,4.4rem);line-height:1.06;letter-spacing:-.055em;color:#24123e; }
+.collection-layout { display:grid;grid-template-columns:1.12fr 1fr;gap:60px;align-items:stretch; }
+.collection-visual { position:relative;min-height:610px;background:#eee6fa;overflow:hidden;border-radius:28px 28px 110px 28px;animation:collection-enter .45s ease both; }
+.collection-visual img { object-fit:cover; }
+.collection-photo-caption { position:absolute;bottom:24px;left:24px;right:24px;display:flex;align-items:center;gap:12px;width:fit-content;max-width:calc(100% - 48px);padding:16px 20px;border-radius:20px;background:#fff;color:#24123e;font-weight:650;box-shadow:0 8px 30px #17072f20; }
+.collection-config { padding-block:4px; }
+.collection-selector { display:grid;gap:10px;grid-template-columns:repeat(3,1fr); }
+.collection-selector button { display:flex;align-items:center;justify-content:space-between;gap:5px;padding:14px 12px;min-height:68px;border:1px solid #dfd5ed;border-radius:14px;background:white;font-size:.84rem;font-weight:650;color:#3e2c58;text-align:left;cursor:pointer;transition:background .2s,border-color .2s; }
+.collection-selector button>span { display:flex;align-items:center;gap:7px; }
+.collection-selector button[aria-pressed=true] { background:#f3ebff;border:2px solid #6835db;padding:13px 11px;color:#5021a5; }
+.collection-summary { padding-top:28px; }
+.collection-mode { font-size:.83rem;color:#645275; }
+.collection-summary h3 { font-size:clamp(1.6rem,2.4vw,2.2rem);line-height:1.15;letter-spacing:-.04em;margin:12px 0 15px;color:#24123e; }
+.collection-summary>p { color:#645275;line-height:1.65; }
+.collection-summary ol { margin:20px 0 26px;list-style:decimal inside; }
+.collection-summary li { padding:9px 0;border-bottom:1px solid #ece6f4;font-size:.9rem;color:#684098; }
+.collection-summary li a { display:inline-flex;justify-content:space-between;gap:12px;max-width:90%;color:#352143; }
+.collection-start { display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 24px;background:#5424bb;color:#fff;border-radius:14px;font-weight:700;min-height:64px;transition:background .2s; }
+.collection-start:hover { background:#421992; }
+.collection-reassurance { margin-top:14px;font-size:.75rem;line-height:1.65;color:#655775; }
+.collection-benefits { display:flex;justify-content:space-between;gap:24px;border-block:1px solid #e7dff0;padding:22px 0;margin-top:38px; }
+.collection-benefits span { display:flex;align-items:center;gap:10px;font-size:.86rem;font-weight:600;color:#534162; }
+@keyframes collection-enter { from { opacity:.4;transform:translateY(8px); } to { opacity:1;transform:none; } }
+@media(max-width:800px){.discovery-collection{padding-block:48px}.collection-heading{display:block}.collection-heading>p{margin-bottom:16px}.collection-layout{grid-template-columns:1fr;gap:28px}.collection-visual{min-height:380px;aspect-ratio:1.1;border-bottom-right-radius:70px}.collection-selector button{min-height:72px;padding:10px;font-size:.78rem}.collection-selector button[aria-pressed=true]{padding:9px}.collection-selector button>span{flex-direction:column;align-items:start}.collection-benefits{flex-direction:column;gap:16px}.collection-summary li a{max-width:87%}}
+@media(prefers-reduced-motion:reduce){.collection-visual{animation:none}.collection-selector button,.collection-start{transition:none}}
 .analytics-preference { padding:24px max(20px,calc((100vw - 1200px)/2));display:flex;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--esc-line);background:#fff; }
 .offline { padding-block:48px; }
 .offline h1 { font-size:clamp(2.5rem,7vw,4.5rem);line-height:1.06;letter-spacing:-.05em;margin-block:18px; }

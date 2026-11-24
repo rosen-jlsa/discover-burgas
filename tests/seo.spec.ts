@@ -1,4 +1,11 @@
 import {test,expect} from "@playwright/test";
+test("journey selector changes the real route and stays within the viewport",async({page})=>{
+ await page.goto("/bg");const collection=page.locator(".discovery-collection");await collection.getByRole("button",{name:"Северен бряг",exact:true}).click();
+ await expect(collection.getByRole("button",{name:"Северен бряг",exact:true})).toHaveAttribute("aria-pressed","true");
+ await expect(collection.getByRole("link",{name:"Това е моята разходка"})).toHaveAttribute("href","/bg/routes/north-coast-heritage");
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await collection.getByRole("link",{name:"Това е моята разходка"}).click();await expect(page).toHaveURL(/\/bg\/routes\/north-coast-heritage$/);
+});
 test("search metadata and bilingual sitemap are available",async({page,request})=>{
  await page.goto("/en");await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href",/\/en$/);
  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content",/Discover/);
